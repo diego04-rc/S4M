@@ -4,40 +4,37 @@ using UnityEngine;
 
 public class JugadorAndando : JugadorEstado
 {
+    public JugadorAndando(MaquinaEstadosJugador contextoActual,
+        FabricaDeEstados fabricaDeEstados) : base(contextoActual, fabricaDeEstados)
+    { }
+
     public override void ComprobarCambioEstado()
     {
-        throw new System.NotImplementedException();
+        if (!_contexto.Andando)
+        { CambiarEstado(_fabrica.Quieto()); }
+        else if (_contexto.Corriendo)
+        { CambiarEstado(_fabrica.Corriendo()); }
     }
 
     public override void EntrarEstado()
     {
-        throw new System.NotImplementedException();
+        _contexto.MovimientoAplicado = _contexto.VectorMovimiento;
     }
 
     public override void IniciarSubestado()
     {
-        throw new System.NotImplementedException();
+;
     }
 
     public override void SalirEstado()
     {
-        throw new System.NotImplementedException();
+
     }
 
     public override void UpdateEstado()
     {
-        throw new System.NotImplementedException();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Debug.Log("Estado Actual Andando");
+        _contexto.MovimientoAplicado = _contexto.VectorMovimiento;
+        ComprobarCambioEstado(); 
     }
 }

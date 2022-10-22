@@ -4,40 +4,41 @@ using UnityEngine;
 
 public class JugadorEnTierra : JugadorEstado
 {
+    public JugadorEnTierra(MaquinaEstadosJugador contextoActual,
+           FabricaDeEstados fabricaDeEstados) : base(contextoActual, fabricaDeEstados)
+    {
+        _esEstadoRaiz = true;
+        IniciarSubestado();
+    }
+
     public override void ComprobarCambioEstado()
     {
-        throw new System.NotImplementedException();
+        Debug.Log(_contexto.ControladorJugador.isGrounded);
+        if (_contexto.Saltando || !_contexto.ControladorJugador.isGrounded)
+        {
+            CambiarEstado(_fabrica.Saltando());
+        }
     }
 
     public override void EntrarEstado()
     {
-        throw new System.NotImplementedException();
+        _contexto.MovimientoY -= 0.1f;
     }
 
     public override void IniciarSubestado()
     {
-        throw new System.NotImplementedException();
+        AsignarSubestado(_fabrica.EnExploracion());
     }
 
     public override void SalirEstado()
     {
-        throw new System.NotImplementedException();
+
     }
 
     public override void UpdateEstado()
     {
-        throw new System.NotImplementedException();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Debug.Log("Estado Actual En Tierra");
+        _subestadoActual.UpdateEstado();
+        ComprobarCambioEstado();
     }
 }

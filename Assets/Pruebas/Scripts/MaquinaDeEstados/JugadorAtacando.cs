@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class JugadorAtacando : JugadorEstado
 {
+    public JugadorAtacando(MaquinaEstadosJugador contextoActual,
+        FabricaDeEstados fabricaDeEstados) : base(contextoActual, fabricaDeEstados)
+    { }
+
     public override void ComprobarCambioEstado()
     {
         throw new System.NotImplementedException();
@@ -26,18 +30,6 @@ public class JugadorAtacando : JugadorEstado
 
     public override void UpdateEstado()
     {
-        throw new System.NotImplementedException();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        ComprobarCambioEstado();
     }
 }

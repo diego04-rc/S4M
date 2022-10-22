@@ -4,40 +4,41 @@ using UnityEngine;
 
 public class JugadorEnExploracion : JugadorEstado
 {
+    public JugadorEnExploracion(MaquinaEstadosJugador contextoActual,
+           FabricaDeEstados fabricaDeEstados) : base(contextoActual, fabricaDeEstados)
+    {
+        IniciarSubestado();
+    }
+
     public override void ComprobarCambioEstado()
     {
-        throw new System.NotImplementedException();
+
     }
 
     public override void EntrarEstado()
     {
-        throw new System.NotImplementedException();
+
     }
 
     public override void IniciarSubestado()
     {
-        throw new System.NotImplementedException();
+        if (!_contexto.Andando)
+        { AsignarSubestado(_fabrica.Quieto()); }
+        else if (_contexto.Andando && !_contexto.Corriendo)
+        { AsignarSubestado(_fabrica.Andando()); }
+        else
+        { AsignarSubestado(_fabrica.Corriendo()); }
     }
 
     public override void SalirEstado()
     {
-        throw new System.NotImplementedException();
+
     }
 
     public override void UpdateEstado()
     {
-        throw new System.NotImplementedException();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Debug.Log("Estado Actual En Exploracion");
+        _subestadoActual.UpdateEstado();
+        ComprobarCambioEstado();
     }
 }

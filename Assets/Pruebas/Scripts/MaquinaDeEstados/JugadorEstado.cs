@@ -5,16 +5,17 @@ using UnityEngine;
 
 public abstract class JugadorEstado
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    protected bool _esEstadoRaiz = false;
+    protected MaquinaEstadosJugador _contexto;
+    protected FabricaDeEstados _fabrica;
+    protected JugadorEstado _subestadoActual;
+    protected JugadorEstado _superestadoActual;
 
-    // Update is called once per frame
-    void Update()
+    public JugadorEstado(MaquinaEstadosJugador contextoActual, 
+        FabricaDeEstados fabricaDeEstados)
     {
-        
+        _contexto = contextoActual;
+        _fabrica = fabricaDeEstados;
     }
 
     public abstract void EntrarEstado();
@@ -29,9 +30,34 @@ public abstract class JugadorEstado
 
     void UpdateEstados() { }
 
-    void CambiarEstado() { }
+    protected void CambiarEstado(JugadorEstado nuevoEstado) 
+    {
+        // Primero abandonamos el estado actual
+        SalirEstado();
 
-    void AsignarSuperestado() { }
+        // Luego entramos en el nuevo estado
+        nuevoEstado.EntrarEstado();
 
-    void AsignarSubestado() { }
+        if (_esEstadoRaiz)
+        {
+            // Cambiamos el estado en el contexto
+            _contexto.EstadoActual = nuevoEstado;
+        }
+        else if (_superestadoActual != null)
+        {
+            // Si somos subestado, le decimos al padre que cambie de subestado
+            _superestadoActual.AsignarSubestado(nuevoEstado);
+        }
+    }
+
+    protected void AsignarSuperestado(JugadorEstado nuevoSuperestado) 
+    {
+        _superestadoActual = nuevoSuperestado;
+    }
+
+    protected void AsignarSubestado(JugadorEstado nuevoSubestado) 
+    {
+        _subestadoActual = nuevoSubestado;
+        nuevoSubestado.AsignarSuperestado(this);
+    }
 }

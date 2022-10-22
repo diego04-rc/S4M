@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JugadorEnCombate : JugadorEstado
+public class JugadorEsquivando : JugadorEstado
 {
-    public JugadorEnCombate(MaquinaEstadosJugador contextoActual,
-        FabricaDeEstados fabricaDeEstados) : base(contextoActual, fabricaDeEstados)
+    public JugadorEsquivando(MaquinaEstadosJugador contextoActual,
+    FabricaDeEstados fabricaDeEstados) : base(contextoActual, fabricaDeEstados)
     { }
 
     public override void ComprobarCambioEstado()

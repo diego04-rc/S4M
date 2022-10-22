@@ -4,40 +4,51 @@ using UnityEngine;
 
 public class JugadorSaltando : JugadorEstado
 {
+    public JugadorSaltando(MaquinaEstadosJugador contextoActual,
+           FabricaDeEstados fabricaDeEstados) : base(contextoActual, fabricaDeEstados)
+    {
+        _esEstadoRaiz = true;
+        IniciarSubestado();
+    }
+
     public override void ComprobarCambioEstado()
     {
-        throw new System.NotImplementedException();
+        if (_contexto.ControladorJugador.isGrounded)
+        {
+            CambiarEstado(_fabrica.EnTierra());
+        }
     }
 
     public override void EntrarEstado()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("Saltando");
+        if (_contexto.Saltando)
+            _contexto.MovimientoY = 8.0f;
     }
 
     public override void IniciarSubestado()
     {
-        throw new System.NotImplementedException();
+        AsignarSubestado(_fabrica.EnExploracion());
     }
 
     public override void SalirEstado()
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public override void UpdateEstado()
     {
-        throw new System.NotImplementedException();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
+        Debug.Log("Estado Actual Saltando");
+        if (_contexto.MovimientoY < 0.0f)
+        {
+            _contexto.MovimientoY += Physics.gravity.y * 4.0f * Time.deltaTime;
+        }
+        else
+        {
+            _contexto.MovimientoY += Physics.gravity.y * Time.deltaTime;
+        }
         
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        _subestadoActual.UpdateEstado();
+        ComprobarCambioEstado();
     }
 }
