@@ -18,7 +18,9 @@ public class JugadorAndando : JugadorEstado
 
     public override void EntrarEstado()
     {
-        _contexto.MovimientoAplicado = _contexto.VectorMovimiento;
+        _contexto.VelocidadActual = _contexto.VelocidadMinAndando;
+        _contexto.MovimientoAplicado = _contexto.VectorMovimiento *
+            _contexto.VelocidadActual;
     }
 
     public override void IniciarSubestado()
@@ -34,7 +36,13 @@ public class JugadorAndando : JugadorEstado
     public override void UpdateEstado()
     {
         Debug.Log("Estado Actual Andando");
-        _contexto.MovimientoAplicado = _contexto.VectorMovimiento;
+        if (_contexto.VelocidadActual < _contexto.VelocidadMaxAndando)
+        { _contexto.VelocidadActual += _contexto.IncrementoVelocidadAndando 
+                * Time.deltaTime; }
+        if (_contexto.VelocidadActual > _contexto.VelocidadMaxAndando)
+        { _contexto.VelocidadActual = _contexto.VelocidadMaxAndando; }
+        _contexto.MovimientoAplicado = _contexto.VectorMovimiento * 
+            _contexto.VelocidadActual;
         ComprobarCambioEstado(); 
     }
 }

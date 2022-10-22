@@ -23,7 +23,7 @@ public class JugadorSaltando : JugadorEstado
     {
         Debug.Log("Saltando");
         if (_contexto.Saltando)
-            _contexto.MovimientoY = 8.0f;
+            _contexto.MovimientoY = _contexto.VelocidadSalto;
     }
 
     public override void IniciarSubestado()
@@ -41,7 +41,8 @@ public class JugadorSaltando : JugadorEstado
         Debug.Log("Estado Actual Saltando");
         if (_contexto.MovimientoY < 0.0f)
         {
-            _contexto.MovimientoY += Physics.gravity.y * 4.0f * Time.deltaTime;
+            _contexto.MovimientoY += Physics.gravity.y * 
+                _contexto.VelocidadExtraCaida * Time.deltaTime;
         }
         else
         {

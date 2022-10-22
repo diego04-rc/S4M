@@ -31,9 +31,20 @@ public class MaquinaEstadosJugador : MonoBehaviour
     // Vector de movimiento
     private Vector3 _vectorMovimiento;
 
-    // Movimiento aplicado
+    // Movimiento a aplicar
     private Vector3 _movimientoAplicado;
     private float _movimientoY;
+
+    // Velocidades
+    private float _velocidadMinAndando;
+    private float _velocidadMaxAndando;
+    private float _incrementoVelocidadAndando;
+    private float _velocidadMinCorriendo;
+    private float _velocidadMaxCorriendo;
+    private float _incrementoVelocidadCorriendo;
+    private float _velocidadActual;
+    private float _velocidadSalto;
+    private float _velocidadExtraCaida;
 
     // Controlador del personaje
     private CharacterController _controladorJugador;
@@ -82,6 +93,60 @@ public class MaquinaEstadosJugador : MonoBehaviour
         set { _movimientoAplicado = value; }
     }
 
+    public float VelocidadMinAndando
+    {
+        get { return _velocidadMinAndando; }
+        set { _velocidadMinAndando = value; }
+    }
+
+    public float VelocidadMaxAndando
+    {
+        get { return _velocidadMaxAndando; }
+        set { _velocidadMaxAndando = value; }
+    }
+
+    public float IncrementoVelocidadAndando
+    {
+        get { return _incrementoVelocidadAndando; }
+        set { _incrementoVelocidadAndando = value; }
+    }
+
+    public float VelocidadMinCorriendo
+    {
+        get { return _velocidadMinCorriendo; }
+        set { _velocidadMinCorriendo = value; }
+    }
+
+    public float VelocidadMaxCorriendo
+    {
+        get { return _velocidadMaxCorriendo; }
+        set { _velocidadMaxCorriendo = value; }
+    }
+
+    public float IncrementoVelocidadCorriendo
+    {
+        get { return _incrementoVelocidadCorriendo; }
+        set { _incrementoVelocidadCorriendo = value; }
+    }
+
+    public float VelocidadActual
+    {
+        get { return _velocidadActual; }
+        set { _velocidadActual = value; }
+    }
+
+    public float VelocidadSalto
+    {
+        get { return _velocidadSalto; }
+        set { _velocidadSalto = value; }
+    }
+
+    public float VelocidadExtraCaida
+    {
+        get { return _velocidadExtraCaida; }
+        set { _velocidadExtraCaida = value; }
+    }
+
     public CharacterController ControladorJugador
     {
         get { return _controladorJugador; }
@@ -109,6 +174,14 @@ public class MaquinaEstadosJugador : MonoBehaviour
         _corriendo = false;
         _vectorMovimiento = Vector3.zero;
         _movimientoAplicado = Vector3.zero;
+        _velocidadMinAndando = 2.0f;
+        _velocidadMaxAndando = 4.0f;
+        _velocidadMinCorriendo = 5.0f;
+        _velocidadMaxCorriendo = 7.0f;
+        _velocidadSalto = 8.0f;
+        _velocidadExtraCaida = 2.0f;
+        _incrementoVelocidadAndando = 1.0f;
+        _incrementoVelocidadCorriendo = 1.0f;
     }
 
 
@@ -195,8 +268,11 @@ public class MaquinaEstadosJugador : MonoBehaviour
     void Caminar()
     {
         _andando = true;
-        _vectorMovimiento = new Vector3(Input.GetAxis("Horizontal2"), 
-            0.0f, Input.GetAxis("Vertical"));
+        Vector3 delante = Camera.main.transform.forward * Input.GetAxis("Vertical");
+        Vector3 derecha = Camera.main.transform.right * Input.GetAxis("Horizontal2");
+        delante.y = 0.0f;
+        derecha.y = 0.0f;
+        _vectorMovimiento = delante + derecha;
         if (_vectorMovimiento.magnitude > 1)
         {
             _vectorMovimiento = _vectorMovimiento.normalized;
