@@ -49,6 +49,9 @@ public class MaquinaEstadosJugador : MonoBehaviour
     // Controlador del personaje
     private CharacterController _controladorJugador;
 
+    // Hitbox del ataque
+    private Collider _hitboxAtaque;
+
     // Fin Variables Globales a los estados
     // ###############################################################
 
@@ -182,6 +185,7 @@ public class MaquinaEstadosJugador : MonoBehaviour
         _velocidadExtraCaida = 2.0f;
         _incrementoVelocidadAndando = 1.0f;
         _incrementoVelocidadCorriendo = 1.0f;
+        _hitboxAtaque = GameObject.Find("HitZone").GetComponent<Collider>();
     }
 
 
@@ -262,7 +266,7 @@ public class MaquinaEstadosJugador : MonoBehaviour
 
     void Atacar()
     {
-
+        _hitboxAtaque.enabled = true;
     }
 
     void Caminar()
@@ -278,7 +282,6 @@ public class MaquinaEstadosJugador : MonoBehaviour
             _vectorMovimiento = _vectorMovimiento.normalized;
         }
     }
-
 
     // Fin Funciones para manejar los inputs del usuario
     // ###############################################################

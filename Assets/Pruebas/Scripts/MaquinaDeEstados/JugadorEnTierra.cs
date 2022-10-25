@@ -14,20 +14,23 @@ public class JugadorEnTierra : JugadorEstado
     public override void ComprobarCambioEstado()
     {
         Debug.Log(_contexto.ControladorJugador.isGrounded);
-        if (_contexto.Saltando || !_contexto.ControladorJugador.isGrounded)
+        if (_subestadoActual.GetType() != typeof(JugadorEnCombate))
         {
-            CambiarEstado(_fabrica.Saltando());
+            if (_contexto.Saltando || !_contexto.ControladorJugador.isGrounded)
+            {
+                CambiarEstado(_fabrica.Saltando());
+            }
         }
     }
 
     public override void EntrarEstado()
     {
-        _contexto.MovimientoY -= 0.1f;
+        _contexto.MovimientoY -= 5.0f;
     }
 
     public override void IniciarSubestado()
     {
-        AsignarSubestado(_fabrica.EnExploracion());
+        AsignarSubestado(_fabrica.EnCombate());
     }
 
     public override void SalirEstado()

@@ -6,30 +6,39 @@ public class JugadorEnCombate : JugadorEstado
 {
     public JugadorEnCombate(MaquinaEstadosJugador contextoActual,
         FabricaDeEstados fabricaDeEstados) : base(contextoActual, fabricaDeEstados)
-    { }
+    {
+        IniciarSubestado();
+    }
 
     public override void ComprobarCambioEstado()
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public override void EntrarEstado()
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public override void IniciarSubestado()
     {
-        throw new System.NotImplementedException();
+        if (!_contexto.Andando)
+        { AsignarSubestado(_fabrica.Quieto()); }
+        else if (_contexto.Andando && !_contexto.Corriendo)
+        { AsignarSubestado(_fabrica.Andando()); }
+        else
+        { AsignarSubestado(_fabrica.Corriendo()); }
     }
 
     public override void SalirEstado()
     {
-        throw new System.NotImplementedException();
+
     }
 
     public override void UpdateEstado()
     {
+        Debug.Log("Estado Actual En Combate");
+        _subestadoActual.UpdateEstado();
         ComprobarCambioEstado();
     }
 }
