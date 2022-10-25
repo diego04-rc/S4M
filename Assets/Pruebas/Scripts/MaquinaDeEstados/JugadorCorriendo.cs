@@ -43,6 +43,10 @@ public class JugadorCorriendo : JugadorEstado
         { _contexto.VelocidadActual = _contexto.VelocidadMaxCorriendo; }
         _contexto.MovimientoAplicado = _contexto.VectorMovimiento *
             _contexto.VelocidadActual;
+        Vector3 targetDir = _contexto.MovimientoAplicado;
+        Vector3 newDir = Vector3.RotateTowards(_contexto.Cuerpo.forward, targetDir, 4 * Time.deltaTime, 0.0f);
+        newDir.y = 0.0f;
+        _contexto.Cuerpo.rotation = Quaternion.LookRotation(newDir);
         ComprobarCambioEstado();    
     }
 }

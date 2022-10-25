@@ -9,7 +9,7 @@ public class MaquinaEstadosJugador : MonoBehaviour
 
     // Conjuntos de nombres de Axis para las entradas
     private readonly string[] _AxisSaltar    = { "Jump" };
-    private readonly string[] _AxisCaminar   = { "Horizontal2", "Vertical" };
+    private readonly string[] _AxisCaminar   = { "Horizontal", "Vertical" };
     private readonly string[] _AxisCorrer    = { "Run" };
     private readonly string[] _AxisAtacar    = { "Fire1" };
 
@@ -49,8 +49,8 @@ public class MaquinaEstadosJugador : MonoBehaviour
     // Controlador del personaje
     private CharacterController _controladorJugador;
 
-    // Hitbox del ataque
-    private Collider _hitboxAtaque;
+    // Cuerpo del personaje
+    private Transform _cuerpo;
 
     // Fin Variables Globales a los estados
     // ###############################################################
@@ -155,6 +155,12 @@ public class MaquinaEstadosJugador : MonoBehaviour
         get { return _controladorJugador; }
     }
 
+    public Transform Cuerpo
+    {
+        get { return _cuerpo; }
+        set { _cuerpo = value; }
+    }
+
     // Fin Getters y Setters de variables
     // ###############################################################
 
@@ -185,7 +191,7 @@ public class MaquinaEstadosJugador : MonoBehaviour
         _velocidadExtraCaida = 2.0f;
         _incrementoVelocidadAndando = 1.0f;
         _incrementoVelocidadCorriendo = 1.0f;
-        _hitboxAtaque = GameObject.Find("HitZone").GetComponent<Collider>();
+        _cuerpo = GameObject.Find("Cuerpo").transform;
     }
 
 
@@ -266,14 +272,14 @@ public class MaquinaEstadosJugador : MonoBehaviour
 
     void Atacar()
     {
-        _hitboxAtaque.enabled = true;
+        
     }
 
     void Caminar()
     {
         _andando = true;
         Vector3 delante = Camera.main.transform.forward * Input.GetAxis("Vertical");
-        Vector3 derecha = Camera.main.transform.right * Input.GetAxis("Horizontal2");
+        Vector3 derecha = Camera.main.transform.right * Input.GetAxis("Horizontal");
         delante.y = 0.0f;
         derecha.y = 0.0f;
         _vectorMovimiento = delante + derecha;
