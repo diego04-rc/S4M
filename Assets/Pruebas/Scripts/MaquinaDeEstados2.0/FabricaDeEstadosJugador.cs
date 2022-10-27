@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class FabricaDeEstadosJugador
 {
+    // Maquina de estados actual del jugador
     private MaquinaDeEstadosJugador _contexto;
 
+    // Creamos una fabrica a partir de la maquina de estados actual del jugador
     public FabricaDeEstadosJugador(MaquinaDeEstadosJugador contextoActual)
     { _contexto = contextoActual; }
-    
+
+    //##############################################################
+    // Metodos para crear todos los posibles estados del jugador
+
     public EstadoJugador EnAireCombate()
     { return new EEnAireCombateJugador(_contexto, this); }
 
@@ -86,4 +91,7 @@ public class FabricaDeEstadosJugador
 
     public EstadoJugador Quieto()
     { return new EQuietoJugador(_contexto, this); }
+
+    // Fin Metodos para crear todos los posibles estados del jugador
+    //##############################################################
 }

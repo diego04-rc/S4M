@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class EEnTierraExploracionJugador : EstadoJugador
 {
+    // Guardamos el contexto actual y la fabrica a traves del constructor de
+    // estado jugador, establecemos como nodo raiz y iniciamos el estado hijo
     public EEnTierraExploracionJugador(MaquinaDeEstadosJugador contextoActual,
-        FabricaDeEstadosJugador fabrica) : base(contextoActual, fabrica) { }
+        FabricaDeEstadosJugador fabrica) : base(contextoActual, fabrica) 
+    { _esEstadoRaiz = true; IniciarSubestado(); }
 
     public override void ComprobarCambioEstado()
     {
-        throw new System.NotImplementedException();
+        // Comprobamos si el jugador pasa a estar en el aire
+
+        // Si no, comprobamos si pasa a estar en combate
+
+        // Si no, comprobamos si esta interactuando con el entorno
     }
 
     public override void EntrarEstado()
