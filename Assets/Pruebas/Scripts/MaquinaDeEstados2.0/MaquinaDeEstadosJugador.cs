@@ -71,6 +71,17 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
     // Posicion del enemigo fijado
     private Vector3 _posFijado;
 
+    // Variables para el esquive
+    // Direccion
+    private Vector3 _dirEsquive;
+    // Velocidades
+    private float _velActEsquive;
+    [SerializeField] private float _velMaxEsquive;
+    [SerializeField] private float _decVelEsquive;
+    // Bloqueador
+    [SerializeField] private float _coolDownEsquive;
+    private bool _enCoolDownEsquive;
+
     // Fin Variables Globales
     //##############################################################
 
@@ -205,6 +216,36 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
         get { return _posFijado; }
         set { _posFijado = value; }
     }
+    public Vector3 DirEsquive
+    {
+        get { return _dirEsquive; }
+        set { _dirEsquive = value; }
+    }
+    public float VelActEsquive
+    {
+        get { return _velActEsquive; }
+        set { _velActEsquive = value; }
+    }
+    public float VelMaxEsquive
+    {
+        get { return _velMaxEsquive; }
+        set { _velMaxEsquive = value; }
+    }
+    public float DecVelEsquive
+    {
+        get { return _decVelEsquive; }
+        set { _decVelEsquive = value; }
+    }
+    public float CoolDownEsquive
+    {
+        get { return _coolDownEsquive; }
+        set { _coolDownEsquive = value; }
+    }
+    public bool EnCoolDownEsquive
+    {
+        get { return _enCoolDownEsquive; }
+        set { _enCoolDownEsquive = value; }
+    }
 
     // Fin Getters y Setters
     //##############################################################
@@ -234,6 +275,12 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
         // Iniciamos que no hay enemigos fijados y su posicion a cero
         _enemigoFijado = false;
         _posFijado = Vector3.zero;
+
+        // Iniciamos la direccion del esquive a cero
+        _dirEsquive = Vector3.zero;
+
+        // Esquive no en cooldown
+        _enCoolDownEsquive = false;
     }
 
     void Update()
@@ -247,6 +294,8 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
 
         // Actualizamos el movimiento en Y
         _movFinal.y = _movY;
+
+        Debug.Log(_movFinal);
 
         // Movemos el personaje a partir del movimiento final
         _controladorJugador.Move(_movFinal * Time.deltaTime);
@@ -307,6 +356,21 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
     // Metodo para comprobar si hay enemigos en el radio de combate
     public bool EnemigosCerca()
     { return _detectorEnemigos.ObtenerGameObjects().Count > 0; }
+
+    // Metodo para iniciar el cooldown del esquive
+    public void IniciarCoolDown()
+    {
+        StartCoroutine(IniciarCoolDownCorutina());
+    }
+
+    // Corutina para iniciar el cooldown del esquive
+    private IEnumerator IniciarCoolDownCorutina()
+    {
+        _enCoolDownEsquive = true;
+        yield return new WaitForSeconds(_coolDownEsquive);
+        _enCoolDownEsquive = false;
+        yield break;
+    }
 
     //##############################################################
     // Metodos para las acciones de los inputs

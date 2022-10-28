@@ -34,6 +34,12 @@ public class EQuietoCombateJugador : EstadoJugador
         // DEBUG //
         Debug.Log("Estado Hoja: Quieto Combate");
 
+        Vector3 dirObjetivo = Camera.main.transform.forward;
+        Vector3 direccion = Vector3.RotateTowards(_contexto.ModeloPersonaje.forward,
+            dirObjetivo, _contexto.VelDirAndando * Time.deltaTime, 0.0f);
+        direccion.y = 0.0f;
+        _contexto.ModeloPersonaje.rotation = Quaternion.LookRotation(direccion);
+
         // Comprobamos un posible cambio de estado
         ComprobarCambioEstado();
     }

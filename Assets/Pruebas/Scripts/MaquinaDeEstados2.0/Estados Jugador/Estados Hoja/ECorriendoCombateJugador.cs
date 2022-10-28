@@ -46,7 +46,7 @@ public class ECorriendoCombateJugador : EstadoJugador
         _contexto.MovFinal = _contexto.VectorInput * _contexto.VelActual;
 
         // Corregimos la direccíon a la que mira el personaje
-        Vector3 dirObjetivo = _contexto.MovFinal;
+        Vector3 dirObjetivo = Camera.main.transform.forward;
         Vector3 direccion = Vector3.RotateTowards(_contexto.ModeloPersonaje.forward,
             dirObjetivo, _contexto.VelDirCorriendo * Time.deltaTime, 0.0f);
         direccion.y = 0.0f;

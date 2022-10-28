@@ -25,7 +25,7 @@ public class EEnTierraCombateJugador : EstadoJugador
     {
         // Nos aseguramos de que se detecta que el jugador esta en el suelo 
         // añadiendo algo de velocidad en Y
-        _contexto.MovY = -0.1f;
+        _contexto.MovY = -10.0f;
     }
 
     public override void IniciarSubestado()
