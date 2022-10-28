@@ -4,31 +4,37 @@ using UnityEngine;
 
 public class EQuietoJugador : EstadoJugador
 {
+    // Guardamos el contexto actual y la fabrica a traves del constructor de
+    // estado jugador
     public EQuietoJugador(MaquinaDeEstadosJugador contextoActual,
         FabricaDeEstadosJugador fabrica) : base(contextoActual, fabrica) { }
 
     public override void ComprobarCambioEstado()
     {
-        throw new System.NotImplementedException();
+        // Si estamos andando y corriendo
+        if (_contexto.Andando && _contexto.Corriendo)
+        { CambiarEstado(_fabrica.Corriendo()); }
+        // Si solo estamos andando
+        else if (_contexto.Andando)
+        { CambiarEstado(_fabrica.Andando()); }
     }
 
     public override void EntrarEstado()
     {
-        throw new System.NotImplementedException();
+        // Nos aseguramos de que el movimiento sea cero
+        _contexto.MovFinal = Vector3.zero;
     }
 
-    public override void IniciarSubestado()
-    {
-        throw new System.NotImplementedException();
-    }
+    public override void IniciarSubestado() {}
 
-    public override void SalirEstado()
-    {
-        throw new System.NotImplementedException();
-    }
+    public override void SalirEstado() {}
 
     public override void UpdateEstado()
     {
-        throw new System.NotImplementedException();
+        // DEBUG //
+        Debug.Log("Estado Hoja: Quieto");
+
+        // Comprobamos un posible cambio de estado
+        ComprobarCambioEstado();   
     }
 }

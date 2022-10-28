@@ -41,7 +41,7 @@ public class FabricaDeEstadosJugador
     public EstadoJugador AndandoAire()
     { return new EAndandoAireJugador(_contexto, this); }
 
-    public EstadoJugador AndandoCombateFijado()
+    public EstadoJugador AndandoCombateFijando()
     { return new EAndandoCombateFijandoJugador(_contexto, this); }
 
     public EstadoJugador AndandoCombate()
@@ -62,7 +62,7 @@ public class FabricaDeEstadosJugador
     public EstadoJugador CorriendoAire()
     { return new ECorriendoAireJugador(_contexto, this); }
 
-    public EstadoJugador CorriendoCombateFijado()
+    public EstadoJugador CorriendoCombateFijando()
     { return new ECorriendoCombateFijandoJugador(_contexto, this); }
 
     public EstadoJugador CorriendoCombate()

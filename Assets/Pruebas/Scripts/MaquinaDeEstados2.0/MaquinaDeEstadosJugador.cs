@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class MaquinaDeEstadosJugador : MonoBehaviour
@@ -36,15 +37,24 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
     [SerializeField]
     private Transform _modeloPersonaje;
 
+    // Trigger detector de enemigos en el area del personaje
+    [Tooltip("Colider zona en la que si hay enemigos el jugador pasará a estar en combate")]
+    [SerializeField]
+    private DetectorTrigger _detectorEnemigos;
+
     // Varibles para controlar las distintas velocidades
+    // Velocidad Actual
+    private float _velActual;
     // Andando
     [SerializeField] private float _velMinAndando;
     [SerializeField] private float _velMaxAndando;
     [SerializeField] private float _incVelAndando;
+    [SerializeField] private float _velDirAndando;
     // Corriendo
     [SerializeField] private float _velMinCorriendo;
     [SerializeField] private float _velMaxCorriendo;
     [SerializeField] private float _incVelCorriendo;
+    [SerializeField] private float _velDirCorriendo;
     // Salto
     [SerializeField] private float _velSalto;
     [SerializeField] private float _gravedad;
@@ -54,6 +64,12 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
     private Vector3 _vectorInput;
     private Vector3 _movFinal;
     private float _movY;
+
+    // Variable para controlar si hay algun enemigo fijado
+    private bool _enemigoFijado;
+
+    // Posicion del enemigo fijado
+    private Vector3 _posFijado;
 
     // Fin Variables Globales
     //##############################################################
@@ -104,6 +120,11 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
     {
         get { return _modeloPersonaje; }
     }
+    public float VelActual
+    {
+        get { return _velActual; }
+        set { _velActual = value; }
+    }
     public float VelMinAndando
     {
         get { return _velMinAndando; }
@@ -118,6 +139,11 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
     {
         get { return _incVelAndando; }
         set { _incVelAndando = value; }
+    }
+    public float VelDirAndando
+    {
+        get { return _velDirAndando; }
+        set { _velDirAndando = value; }
     }
     public float VelMinCorriendo
     {
@@ -134,6 +160,11 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
         get { return _incVelCorriendo; }
         set { _incVelCorriendo = value; }
     }
+    public float VelDirCorriendo
+    {
+        get { return _velDirCorriendo; }
+        set { _velDirCorriendo = value; }
+    }
     public float VelSalto
     {
         get { return _velSalto; }
@@ -148,6 +179,31 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
     {
         get { return _incDeCaida; }
         set { _incDeCaida = value; }
+    }
+    public Vector3 VectorInput
+    {
+        get { return _vectorInput; }
+        set { _vectorInput = value; }
+    }
+    public Vector3 MovFinal
+    {
+        get { return _movFinal; }
+        set { _movFinal = value; }
+    }
+    public float MovY
+    {
+        get { return _movY; }
+        set { _movY = value; }
+    }
+    public bool EnemigoFijado
+    {
+        get { return _enemigoFijado; }
+        set { _enemigoFijado = value; }
+    }
+    public Vector3 PosFijado
+    {
+        get { return _posFijado; }
+        set { _posFijado = value; }
     }
 
     // Fin Getters y Setters
@@ -170,9 +226,14 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
         _atacado = false;
 
         // Iniciamos las variables de movimento a cero
+        _velActual = 0.0f;
         _vectorInput = Vector3.zero;
         _movFinal = Vector3.zero;
         _movY = 0.0f;
+
+        // Iniciamos que no hay enemigos fijados y su posicion a cero
+        _enemigoFijado = false;
+        _posFijado = Vector3.zero;
     }
 
     void Update()
@@ -242,6 +303,10 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
             }
         }
     }
+
+    // Metodo para comprobar si hay enemigos en el radio de combate
+    public bool EnemigosCerca()
+    { return _detectorEnemigos.ObtenerGameObjects().Count > 0; }
 
     //##############################################################
     // Metodos para las acciones de los inputs
