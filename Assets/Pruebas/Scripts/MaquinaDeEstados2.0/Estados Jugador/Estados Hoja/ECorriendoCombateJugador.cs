@@ -17,10 +17,16 @@ public class ECorriendoCombateJugador : EstadoJugador
         // Si dejamos de correr pasamos a andar
         else if (!_contexto.Corriendo)
         { CambiarEstado(_fabrica.AndandoCombate()); }
+        // Si se pusa saltar, se realiza un esquive si no esta en cooldown
+        else if (_contexto.Saltado && !_contexto.EnCoolDownEsquive)
+        { CambiarEstado(_fabrica.EsquivarCombate()); }
     }
 
     public override void EntrarEstado()
     {
+        // Establecemos el estado hoja actual
+        _contexto.EstadoHojaActual = MaquinaDeEstadosJugador.EstadoHoja.CorriendoCombate;
+
         // Asignamos la velocidad a la minima corriendo
         _contexto.VelActual = _contexto.VelMinCorriendo;
         // Iniciamos el vector movimiento final

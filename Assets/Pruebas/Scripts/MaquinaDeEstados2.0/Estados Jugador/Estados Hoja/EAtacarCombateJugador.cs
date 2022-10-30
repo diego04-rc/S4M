@@ -14,7 +14,8 @@ public class EAtacarCombateJugador : EstadoJugador
 
     public override void EntrarEstado()
     {
-        throw new System.NotImplementedException();
+        // Establecemos el estado hoja actual
+        _contexto.EstadoHojaActual = MaquinaDeEstadosJugador.EstadoHoja.AtacarCombate;
     }
 
     public override void IniciarSubestado()

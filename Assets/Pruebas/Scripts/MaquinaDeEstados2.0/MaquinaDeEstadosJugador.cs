@@ -8,6 +8,23 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
     //##############################################################
     // Inicio Variables Globales
 
+    // Enumerables con los posibles estados del jugador
+    public enum EstadoHoja {AndandoAireCombate, AndandoAire, AndandoCombateFijando, 
+        AndandoCombate, Andando, AtacarCombateFijando, AtacarCombate, CorriendoAireCombate,
+        CorriendoAire, CorriendoCombateFijando, CorriendoCombate, Corriendo,
+        EsquivarCombateFijando, EsquivarCombate, QuietoAireCombate, QuietAire,
+        QuietoCombateFijando, QuietoCombate, Quieto};
+
+    public enum EstadoPadre {AireCombate, AireExploracion, TierraCombate, TierraExploracion,
+        InteractuandoConEntorno}
+
+    public enum Subestado {CombateLibre, EnemigoFijado, EstadoVacio}
+
+    // Variables con el estado actual
+    private EstadoHoja _estadoHojaActual;
+    private EstadoPadre _estadoPadreActual;
+    private Subestado _subestadoActual;
+
     // Conjuntos de nombres de Axis para las entradas
     private readonly string[] _AxisSaltar = { "Jump" };
     private readonly string[] _AxisCaminar = { "Horizontal", "Vertical" };
@@ -17,6 +34,8 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
     // Variables para controlar el estado del jugador
     private EstadoJugador _estadoActual;
     private FabricaDeEstadosJugador _fabricaEstados;
+
+    
 
     // Variable para activar y desactivar los inputs del usuario
     private bool _inputsActivos;
@@ -245,6 +264,21 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
     {
         get { return _enCoolDownEsquive; }
         set { _enCoolDownEsquive = value; }
+    }
+    public EstadoHoja EstadoHojaActual
+    {
+        get { return _estadoHojaActual; }
+        set { _estadoHojaActual = value; }
+    }
+    public EstadoPadre EstadoPadreActual
+    {
+        get { return _estadoPadreActual; }
+        set { _estadoPadreActual = value; }
+    }
+    public Subestado SubestadoActual
+    {
+        get { return _subestadoActual; }
+        set { _subestadoActual = value; }
     }
 
     // Fin Getters y Setters

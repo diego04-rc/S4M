@@ -17,7 +17,11 @@ public class EEnAireCombateJugador : EstadoJugador
         { CambiarEstado(_fabrica.EnTierraCombate()); }
     }
 
-    public override void EntrarEstado() {}
+    public override void EntrarEstado() 
+    {
+        // Establecemos el estado padre
+        _contexto.EstadoPadreActual = MaquinaDeEstadosJugador.EstadoPadre.AireCombate;
+    }
 
     public override void IniciarSubestado()
     {

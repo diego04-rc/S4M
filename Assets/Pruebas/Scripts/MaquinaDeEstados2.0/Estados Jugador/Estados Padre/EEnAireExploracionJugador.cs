@@ -19,6 +19,9 @@ public class EEnAireExploracionJugador : EstadoJugador
 
     public override void EntrarEstado()
     {
+        // Establecemos el estado padre
+        _contexto.EstadoPadreActual = MaquinaDeEstadosJugador.EstadoPadre.AireExploracion;
+
         // Comprobamos si se ha saltado para aplicar velocidad
         if (_contexto.Saltado)
         { _contexto.MovY = _contexto.VelSalto; }

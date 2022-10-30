@@ -14,7 +14,8 @@ public class EInteractuandoConEntornoJugador : EstadoJugador
 
     public override void EntrarEstado()
     {
-        throw new System.NotImplementedException();
+        // Establecemos el estado padre
+        _contexto.EstadoPadreActual = MaquinaDeEstadosJugador.EstadoPadre.InteractuandoConEntorno;
     }
 
     public override void IniciarSubestado()

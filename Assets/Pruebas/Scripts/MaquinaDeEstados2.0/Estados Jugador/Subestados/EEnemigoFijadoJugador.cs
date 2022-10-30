@@ -17,7 +17,11 @@ public class EEnemigoFijadoJugador : EstadoJugador
         { CambiarEstado(_fabrica.CombateLibre()); }
     }
 
-    public override void EntrarEstado() {}
+    public override void EntrarEstado() 
+    {
+        // Establemcemos el subestado actual
+        _contexto.SubestadoActual = MaquinaDeEstadosJugador.Subestado.EnemigoFijado;
+    }
 
     public override void IniciarSubestado()
     {
@@ -32,7 +36,11 @@ public class EEnemigoFijadoJugador : EstadoJugador
         { AsignarSubestado(_fabrica.QuietoCombateFijando()); }
     }
 
-    public override void SalirEstado() {}
+    public override void SalirEstado() 
+    {
+        // Ponemos el estado en vacio
+        _contexto.SubestadoActual = MaquinaDeEstadosJugador.Subestado.EstadoVacio;
+    }
 
     public override void UpdateEstado()
     {

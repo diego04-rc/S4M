@@ -17,10 +17,16 @@ public class EQuietoCombateJugador : EstadoJugador
         // Si solo estamos andando
         else if (_contexto.Andando)
         { CambiarEstado(_fabrica.AndandoCombate()); }
+        // Si se pusa saltar, se realiza un esquive si no esta en cooldown
+        else if (_contexto.Saltado && !_contexto.EnCoolDownEsquive)
+        { CambiarEstado(_fabrica.EsquivarCombate()); }
     }
 
     public override void EntrarEstado()
     {
+        // Establecemos el estado hoja actual
+        _contexto.EstadoHojaActual = MaquinaDeEstadosJugador.EstadoHoja.QuietoCombate;
+
         // Nos aseguramos de que el movimiento sea cero
         _contexto.MovFinal = Vector3.zero;
     }

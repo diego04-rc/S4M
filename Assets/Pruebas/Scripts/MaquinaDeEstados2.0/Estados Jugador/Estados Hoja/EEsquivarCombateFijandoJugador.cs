@@ -14,7 +14,8 @@ public class EEsquivarCombateFijandoJugador : EstadoJugador
 
     public override void EntrarEstado()
     {
-        throw new System.NotImplementedException();
+        // Establecemos el estado hoja actual
+        _contexto.EstadoHojaActual = MaquinaDeEstadosJugador.EstadoHoja.EsquivarCombateFijando;
     }
 
     public override void IniciarSubestado()

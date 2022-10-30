@@ -23,6 +23,9 @@ public class EEnTierraCombateJugador : EstadoJugador
 
     public override void EntrarEstado()
     {
+        // Establecemos el estado padre
+        _contexto.EstadoPadreActual = MaquinaDeEstadosJugador.EstadoPadre.TierraCombate;
+
         // Nos aseguramos de que se detecta que el jugador esta en el suelo 
         // añadiendo algo de velocidad en Y
         _contexto.MovY = -10.0f;

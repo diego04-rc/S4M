@@ -21,6 +21,9 @@ public class EQuietoAireCombateJugador : EstadoJugador
 
     public override void EntrarEstado()
     {
+        // Establecemos el estado hoja actual
+        _contexto.EstadoHojaActual = MaquinaDeEstadosJugador.EstadoHoja.QuietoAireCombate;
+
         // Nos aseguramos de que el movimiento sea cero
         _contexto.MovFinal = Vector3.zero;
     }

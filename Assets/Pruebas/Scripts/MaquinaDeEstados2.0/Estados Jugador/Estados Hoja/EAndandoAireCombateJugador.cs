@@ -21,6 +21,9 @@ public class EAndandoAireCombateJugador : EstadoJugador
 
     public override void EntrarEstado()
     {
+        // Establecemos el estado hoja actual
+        _contexto.EstadoHojaActual = MaquinaDeEstadosJugador.EstadoHoja.AndandoAireCombate;
+
         // Asignamos la velocidad a la minima andando
         _contexto.VelActual = _contexto.VelMinAndando;
         // Iniciamos el vector movimiento final

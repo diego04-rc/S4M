@@ -29,9 +29,12 @@ public class EEsquivarCombateJugador : EstadoJugador
 
     public override void EntrarEstado()
     {
+        // Establecemos el estado hoja actual
+        _contexto.EstadoHojaActual = MaquinaDeEstadosJugador.EstadoHoja.EsquivarCombate;
+
         // Si el vector input es cero, entonces hacia atras
         if (_contexto.VectorInput == Vector3.zero)
-        { _contexto.DirEsquive = - Vector3.forward; }
+        { _contexto.DirEsquive = - Camera.main.transform.forward; }
         // Si no es el vector input
         else
         { _contexto.DirEsquive = _contexto.VectorInput.normalized; }

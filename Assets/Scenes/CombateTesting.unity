@@ -347,7 +347,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 244381659}
-  m_LocalRotation: {x: 0.010280058, y: 0.0000000055876406, z: -5.7444303e-11, w: 0.9999472}
+  m_LocalRotation: {x: 0.010280052, y: -0.000000001472444, z: 1.5137605e-11, w: 0.9999472}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1705,9 +1705,9 @@ MonoBehaviour:
   _velSalto: 4
   _gravedad: 9.8
   _incDeCaida: 2
-  _velMaxEsquive: 10
-  _decVelEsquive: 1
-  _coolDownEsquive: 2
+  _velMaxEsquive: 15
+  _decVelEsquive: 17
+  _coolDownEsquive: 1
 --- !u!1 &1739007321
 GameObject:
   m_ObjectHideFlags: 3
@@ -1943,7 +1943,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2116366693}
-  m_LocalRotation: {x: 0.010280077, y: 0.000000007902117, z: -8.123868e-11, w: 0.9999472}
+  m_LocalRotation: {x: 0.010280077, y: -0.000000004005548, z: 4.117952e-11, w: 0.9999472}
   m_LocalPosition: {x: 0, y: 3.99, z: -16.470001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
