@@ -31,6 +31,9 @@ public class ECombateLibreJugador : EstadoJugador
         // Si no, si esta andando
         else if (_contexto.Andando)
         { AsignarSubestado(_fabrica.AndandoCombate()); }
+        // Si no quiza ha atacado
+        else if (_contexto.EjecutadoAtaqueLigero || _contexto.EjecutadoAtaquePesado)
+        { AsignarSubestado(_fabrica.AtacarCombate()); }
         // Si no, esta quieto
         else
         { AsignarSubestado(_fabrica.QuietoCombate()); }

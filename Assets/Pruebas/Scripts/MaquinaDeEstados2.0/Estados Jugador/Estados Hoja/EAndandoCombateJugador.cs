@@ -20,6 +20,9 @@ public class EAndandoCombateJugador : EstadoJugador
         // Si se pusa saltar, se realiza un esquive si no esta en cooldown
         else if (_contexto.Saltado && !_contexto.EnCoolDownEsquive)
         { CambiarEstado(_fabrica.EsquivarCombate()); }
+        // Si ha atacado
+        else if (_contexto.EjecutadoAtaqueLigero || _contexto.EjecutadoAtaquePesado)
+        { CambiarEstado(_fabrica.AtacarCombate()); }
     }
 
     public override void EntrarEstado()

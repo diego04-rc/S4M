@@ -9,27 +9,53 @@ public class EAtacarCombateJugador : EstadoJugador
 
     public override void ComprobarCambioEstado()
     {
-        throw new System.NotImplementedException();
+        if (_contexto.AtaqueLigero.EstadoActual == Ataque.EstadoAtaque.FinAtaque)
+        {
+            // Comprobamos si esta andando y corriendo
+            if (_contexto.Andando && _contexto.Corriendo)
+            { CambiarEstado(_fabrica.CorriendoCombate()); }
+            // Si no, si esta andando
+            else if (_contexto.Andando)
+            { CambiarEstado(_fabrica.AndandoCombate()); }
+            // Si no, esta quieto
+            else
+            { CambiarEstado(_fabrica.QuietoCombate()); }
+        }
     }
 
     public override void EntrarEstado()
     {
         // Establecemos el estado hoja actual
         _contexto.EstadoHojaActual = MaquinaDeEstadosJugador.EstadoHoja.AtacarCombate;
+
+        // Si se ha ejecutado un ligero
+        if (_contexto.EjecutadoAtaqueLigero)
+        { _contexto.AtaqueEjecutado = _contexto.AtaqueLigero; }
+        // Si se ha ejecutado un pesado
+        else if (_contexto.EjecutadoAtaquePesado)
+        { _contexto.AtaqueEjecutado = _contexto.AtaquePesado; }
+
+        // Iniciamos el ataque
+        _contexto.AtaqueEjecutado.Atacar();
+
+        // Dejamo de movernos
+        _contexto.MovFinal = Vector3.zero;
     }
 
-    public override void IniciarSubestado()
-    {
-        throw new System.NotImplementedException();
-    }
+    public override void IniciarSubestado() {}
 
-    public override void SalirEstado()
+    public override void SalirEstado() 
     {
-        throw new System.NotImplementedException();
+        // Dejamos de atacar
+        _contexto.EjecutadoAtaqueLigero = false;
+        _contexto.EjecutadoAtaquePesado = false;
     }
 
     public override void UpdateEstado()
     {
-        throw new System.NotImplementedException();
+        // DEBUG //
+        Debug.Log("Estado hoja: Atacando");
+        // Comprobamos si ha acabado el ataque
+        ComprobarCambioEstado();
     }
 }

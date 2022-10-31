@@ -40,8 +40,14 @@ public abstract class Ataque : MonoBehaviour
     [SerializeField]
     private float _tiempoPosterior;
 
-    public Ataque()
-    { }
+    // Variables para controlar en que estado se encuentra el ataque
+    public enum EstadoAtaque {PreAtaque, Ataque, PostAtaque, FinAtaque}
+    private EstadoAtaque _estadoActual;
+    public EstadoAtaque EstadoActual
+    {
+        get { return _estadoActual; }
+    }
+  
 
     public void Awake()
     {
@@ -62,9 +68,15 @@ public abstract class Ataque : MonoBehaviour
     // Corutina que se encarga de manejar las distintas fases del ataque
     private IEnumerator IniciarAtaque()
     {
+        // Establecemos el estado como preataque
+        _estadoActual = EstadoAtaque.PreAtaque;
+
         // Ejecutamos el codigo previo al ataque y esperamos
         PrevioAtaque();
         yield return new WaitForSeconds(_tiempoPrevio);
+
+        // Establecemos el estado como ataque
+        _estadoActual = EstadoAtaque.Ataque;
 
         // Ejecutamos el efecto tantos frames como dure el ataque
         float tiempo = 0.0f;
@@ -74,10 +86,17 @@ public abstract class Ataque : MonoBehaviour
             yield return null;
             tiempo += Time.deltaTime;
         }
-        
+
+        // Establecemos el estado como postataque
+        _estadoActual = EstadoAtaque.PostAtaque;
+
         // Esperamos el tiempo post-ataque, ejecutamos lo necesario y finalizamos
         yield return new WaitForSeconds(_tiempoPosterior);
         PostAtaque();
+
+        // Fin del ataque
+        _estadoActual = EstadoAtaque.FinAtaque;
+
         yield break;
     }
 

@@ -30,7 +30,7 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
     private readonly string[] _AxisSaltar = { "Jump" };
     private readonly string[] _AxisCaminar = { "Horizontal", "Vertical" };
     private readonly string[] _AxisCorrer = { "Run" };
-    private readonly string[] _AxisAtacar = { "Fire1" };
+    private readonly string[] _AxisAtacar = { "Fire1", "Fire2" };
 
     // Variables para controlar el estado del jugador
     private EstadoJugador _estadoActual;
@@ -110,6 +110,13 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
 
     // Script que controla a la bola acompañante
     [SerializeField] private EsferaAcompanyante _acompanyante;
+
+    // Variables para los ataques
+    [SerializeField] private Ataque _ataqueLigero;
+    [SerializeField] private Ataque _ataquePesado;
+    private Ataque _ataqueEjecutado;
+    private bool _ejecutadoAtaquePesado;
+    private bool _ejecutadoAtaqueLigero;
 
     // Fin Variables Globales
     //##############################################################
@@ -310,11 +317,35 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
         get { return _enCoolDownInventario; }
         set { _enCoolDownInventario = value; }
     }
-
     public EsferaAcompanyante Acompanyante
     {
         get { return _acompanyante; }
         set { _acompanyante = value; }
+    }
+    public Ataque AtaqueLigero
+    {
+        get { return _ataqueLigero; }
+        set { _ataqueLigero = value; }
+    }
+    public Ataque AtaquePesado
+    {
+        get { return _ataquePesado; }
+        set { _ataquePesado = value; }
+    }
+    public Ataque AtaqueEjecutado
+    {
+        get { return _ataqueEjecutado; }
+        set { _ataqueEjecutado = value; }
+    }
+    public bool EjecutadoAtaqueLigero
+    {
+        get { return _ejecutadoAtaqueLigero; }
+        set { _ejecutadoAtaqueLigero = value; }
+    }
+    public bool EjecutadoAtaquePesado
+    {
+        get { return _ejecutadoAtaquePesado; }
+        set { _ejecutadoAtaquePesado = value; }
     }
 
     // Fin Getters y Setters
@@ -496,7 +527,16 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
 
     void Atacar()
     {
-
+        if (Input.GetAxis("Fire1") != 0.0)
+        { 
+            _ejecutadoAtaqueLigero = true;
+            _ejecutadoAtaquePesado = false;
+        }
+        else
+        {
+            _ejecutadoAtaquePesado = true;
+            _ejecutadoAtaqueLigero = false;
+        }
     }
 
     // Fin metodos para las acciones de los inputs
