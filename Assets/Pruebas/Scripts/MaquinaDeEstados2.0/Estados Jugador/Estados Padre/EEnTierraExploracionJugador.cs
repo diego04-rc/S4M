@@ -19,9 +19,9 @@ public class EEnTierraExploracionJugador : EstadoJugador
         else if (_contexto.EnemigosCerca())
         { CambiarEstado(_fabrica.EnTierraCombate()); }
         // Si no, comprobamos si esta interactuando con el entorno
-        /**
-         *  Falta por programar
-         */
+        // Abriendo Inventario
+        else if (_contexto.InventarioAbierto && !_contexto.EnCoolDownInventario)
+        { CambiarEstado(_fabrica.InteractuandoConEntorno()); }
     }
 
     public override void EntrarEstado()

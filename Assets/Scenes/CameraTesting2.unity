@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -732,7 +732,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 927896177}
-  m_LocalRotation: {x: 0.010280055, y: 2.174949e-10, z: -2.2359803e-12, w: 0.9999472}
+  m_LocalRotation: {x: 0.010280053, y: 0.0000000018850241, z: -1.9379174e-11, w: 0.9999472}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -919,9 +919,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1036423040}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
   m_LocalPosition: {x: 0.846, y: 16.517, z: -7.474}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.5000002, y: 0.5, z: 0.50000024}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 160370876}
@@ -1303,7 +1303,6 @@ GameObject:
   - component: {fileID: 1594957313}
   - component: {fileID: 1594957312}
   - component: {fileID: 1594957311}
-  - component: {fileID: 1594957315}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1411,18 +1410,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1594957315
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1594957310}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7348cae1ddf52de41a66e8e6abfb9528, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1633520883
 GameObject:
   m_ObjectHideFlags: 0
@@ -1436,7 +1423,7 @@ GameObject:
   - component: {fileID: 1633520888}
   - component: {fileID: 1633520887}
   - component: {fileID: 1633520886}
-  - component: {fileID: 1633520885}
+  - component: {fileID: 1633520890}
   m_Layer: 0
   m_Name: Cuerpo
   m_TagString: Untagged
@@ -1461,18 +1448,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1633520885
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1633520883}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 841c5e5018dbcd34e84257ebf07af823, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!143 &1633520886
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1555,6 +1530,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1633520883}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1633520890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1633520883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ddc7803b68f2c94abe58b8b07bf3bce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _controladorJugador: {fileID: 1633520886}
+  _modeloPersonaje: {fileID: 1633520884}
+  _detectorEnemigos: {fileID: 2031496072}
+  _velMinAndando: 5
+  _velMaxAndando: 8
+  _incVelAndando: 4
+  _velDirAndando: 2
+  _velMinCorriendo: 10
+  _velMaxCorriendo: 15
+  _incVelCorriendo: 4
+  _velDirCorriendo: 4
+  _velSalto: 5
+  _gravedad: 9.8
+  _incDeCaida: 3
+  _velMaxEsquive: 10
+  _decVelEsquive: 18
+  _coolDownEsquive: 1
+  _camaraInventario: {fileID: 1032188794}
+  _coolDownCamaraInventario: 2
 --- !u!1 &1737778067
 GameObject:
   m_ObjectHideFlags: 0
@@ -1739,6 +1745,7 @@ GameObject:
   - component: {fileID: 2031496071}
   - component: {fileID: 2031496070}
   - component: {fileID: 2031496069}
+  - component: {fileID: 2031496072}
   m_Layer: 0
   m_Name: Ojos
   m_TagString: Untagged
@@ -1824,6 +1831,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2031496067}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2031496072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2031496067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f27892daa116f11409f6c826097c855e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _DebugGameObjects: 0
+  _tagsAceptados: []
 --- !u!1 &2107400832
 GameObject:
   m_ObjectHideFlags: 3

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MaquinaDeEstadosJugador : MonoBehaviour
@@ -100,6 +101,12 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
     // Bloqueador
     [SerializeField] private float _coolDownEsquive;
     private bool _enCoolDownEsquive;
+
+    // Variables para la camara del inventario
+    [SerializeField] private GameObject _camaraInventario;
+    [SerializeField] private float _coolDownCamaraInventario;
+    private bool _inventarioAbierto;
+    private bool _enCoolDownInventario;
 
     // Fin Variables Globales
     //##############################################################
@@ -280,6 +287,26 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
         get { return _subestadoActual; }
         set { _subestadoActual = value; }
     }
+    public GameObject CamaraInventario
+    {
+        get { return _camaraInventario; }
+        set { _camaraInventario = value; }
+    }
+    public float CoolDownCamaraInventario
+    {
+        get { return _coolDownCamaraInventario; }
+        set { _coolDownCamaraInventario = value; }
+    }
+    public bool InventarioAbierto
+    {
+        get { return _inventarioAbierto; }
+        set { _inventarioAbierto = value; }
+    }
+    public bool EnCoolDownInventario
+    {
+        get { return _enCoolDownInventario; }
+        set { _enCoolDownInventario = value; }
+    }
 
     // Fin Getters y Setters
     //##############################################################
@@ -315,6 +342,10 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
 
         // Esquive no en cooldown
         _enCoolDownEsquive = false;
+
+        // No se ha abierto el inventario y el cooldown esta desactivado
+        _inventarioAbierto = false;
+        _enCoolDownInventario = false;
     }
 
     void Update()
@@ -385,6 +416,13 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
                 break;
             }
         }
+
+        // Comprobamos si se ha abierto el inventario
+        _inventarioAbierto = false;
+        if (Input.GetKeyUp(KeyCode.Q))
+        {
+            _inventarioAbierto = true;
+        }
     }
 
     // Metodo para comprobar si hay enemigos en el radio de combate
@@ -397,12 +435,26 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
         StartCoroutine(IniciarCoolDownCorutina());
     }
 
+    public void IniciarCoolDownInventario()
+    {
+        StartCoroutine(IniciarCoolDownInventarioCorutina());
+    }
+
     // Corutina para iniciar el cooldown del esquive
     private IEnumerator IniciarCoolDownCorutina()
     {
         _enCoolDownEsquive = true;
         yield return new WaitForSeconds(_coolDownEsquive);
         _enCoolDownEsquive = false;
+        yield break;
+    }
+
+    // Corutina para iniciar el cooldown del inventario
+    private IEnumerator IniciarCoolDownInventarioCorutina()
+    {
+        _enCoolDownInventario = true;
+        yield return new WaitForSeconds(_coolDownCamaraInventario);
+        _enCoolDownInventario = false;
         yield break;
     }
 
