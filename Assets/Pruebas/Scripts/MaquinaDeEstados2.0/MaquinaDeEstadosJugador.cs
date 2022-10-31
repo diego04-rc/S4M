@@ -108,6 +108,9 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
     private bool _inventarioAbierto;
     private bool _enCoolDownInventario;
 
+    // Script que controla a la bola acompañante
+    [SerializeField] private EsferaAcompanyante _acompanyante;
+
     // Fin Variables Globales
     //##############################################################
 
@@ -308,6 +311,12 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
         set { _enCoolDownInventario = value; }
     }
 
+    public EsferaAcompanyante Acompanyante
+    {
+        get { return _acompanyante; }
+        set { _acompanyante = value; }
+    }
+
     // Fin Getters y Setters
     //##############################################################
 
@@ -342,6 +351,9 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
 
         // Esquive no en cooldown
         _enCoolDownEsquive = false;
+
+        // Camara del inventario desactivada
+        _camaraInventario.SetActive(false);
 
         // No se ha abierto el inventario y el cooldown esta desactivado
         _inventarioAbierto = false;

@@ -29,6 +29,9 @@ public class EInteractuandoConEntornoJugador : EstadoJugador
 
         // Cambiamos la camara
         _contexto.CamaraInventario.SetActive(true);
+
+        // El acompañante pasa a estar en posicion de inventario
+        _contexto.Acompanyante.cambiarEstado(EsferaAcompanyante.EstadoAcompanyante.Inventario);
     }
 
     public override void IniciarSubestado() {}
@@ -40,6 +43,9 @@ public class EInteractuandoConEntornoJugador : EstadoJugador
 
         // Iniciamos el cooldown del inventario
         _contexto.IniciarCoolDownInventario();
+
+        // El acompañante vuelve a seguir
+        _contexto.Acompanyante.cambiarEstado(EsferaAcompanyante.EstadoAcompanyante.Siguiendo);
     }
 
     public override void UpdateEstado()
