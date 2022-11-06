@@ -8,4 +8,8 @@ public class MenuManager : MonoBehaviour
     public void Jugar() {
         SceneManager.LoadScene("World1");
     }
+
+    public void Creditos() {
+        SceneManager.LoadScene("Creditos");
+    }
 }
