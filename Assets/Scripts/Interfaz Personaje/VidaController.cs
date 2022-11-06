@@ -5,26 +5,31 @@ using UnityEngine.SceneManagement;
 
 public class VidaController : MonoBehaviour
 {
+    // Contiene los trozos de la vida del personaje
     public GameObject[] imgVida;
-    private int vida;
+    // Contiene las caras del HUD del personaje
+    public GameObject[] imgS4M;
+
+    public int tiempoCambio = 1; // Controla el timepo que se muestra la cara de daño
+    private int vida; // Variable para controlar la vida
     private readonly int vidaMax = 4;
     // Posicion del trozo de vida en el array
     private int punteroVida;
-    // Start is called before the first frame update
+
     void Start()
     {
         vida = vidaMax;
         punteroVida = imgVida.Length - 1;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.V)) // Recibo daño
         {
-            if (punteroVida == 0) // Muerte
+            if (vida == 1) // Muerte
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                imgVida[punteroVida].SetActive(false);
+                StartCoroutine(Reiniciar());
             }
             else
             {
@@ -32,6 +37,7 @@ public class VidaController : MonoBehaviour
                 punteroVida--;
                 imgVida[punteroVida].SetActive(true);
                 vida--;
+                StartCoroutine(CambiarCara());
             }
         }
         if (Input.GetKeyDown(KeyCode.R)) // Recupera vida
@@ -44,5 +50,20 @@ public class VidaController : MonoBehaviour
                 imgVida[punteroVida].SetActive(true);
             }
         }
+    }
+
+    IEnumerator CambiarCara() {
+        imgS4M[0].SetActive(false);
+        imgS4M[1].SetActive(true);
+        yield return new WaitForSeconds(tiempoCambio);
+        imgS4M[1].SetActive(false);
+        imgS4M[0].SetActive(true);
+    }
+
+    IEnumerator Reiniciar() {
+        imgS4M[0].SetActive(false);
+        imgS4M[2].SetActive(true);
+        yield return new WaitForSeconds(2);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
