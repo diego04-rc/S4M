@@ -1390,7 +1390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4155737757d5124fbe54d97b6b89496, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rangoDeAlerta: 10
+  rangoDeAlerta: 8
   capaDelJugador:
     serializedVersion: 2
     m_Bits: 8
