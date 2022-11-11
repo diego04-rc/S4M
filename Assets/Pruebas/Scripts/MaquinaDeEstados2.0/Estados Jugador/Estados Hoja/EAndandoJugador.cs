@@ -16,7 +16,10 @@ public class EAndandoJugador : EstadoJugador
         { CambiarEstado(_fabrica.Quieto()); }
         // Si no, podemos pasar a correr
         else if (_contexto.Corriendo)
-        { CambiarEstado(_fabrica.Corriendo()); }
+        {
+            if (_contexto.ReducirEstamina(_contexto.CosteEstaminaCorrerPorSegundo * Time.deltaTime))
+            { CambiarEstado(_fabrica.Corriendo()); }
+        }
     }
 
     public override void EntrarEstado()

@@ -1105,7 +1105,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 345798853}
-  m_LocalRotation: {x: 0.14909305, y: -0.00016070133, z: 0.000024230267, w: 0.9888232}
+  m_LocalRotation: {x: 0.14909305, y: -0.00016073936, z: 0.000024236002, w: 0.9888232}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2118,7 +2118,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 658990764}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 785483f6eef041545be269599ff814ce, type: 3}
   m_Name: 
@@ -3347,22 +3347,31 @@ MonoBehaviour:
   _velMinAndando: 2
   _velMaxAndando: 4
   _incVelAndando: 1
-  _velDirAndando: 2
+  _velDirAndando: 4
   _velMinCorriendo: 5
   _velMaxCorriendo: 7
   _incVelCorriendo: 2
-  _velDirCorriendo: 2
-  _velSalto: 4
+  _velDirCorriendo: 10
+  _velSalto: 5
   _gravedad: 9.8
   _incDeCaida: 2
+  _velDirCombate: 20
   _velMaxEsquive: 15
   _decVelEsquive: 17
-  _coolDownEsquive: 1
+  _coolDownEsquive: 0
   _camaraInventario: {fileID: 1357069181}
   _coolDownCamaraInventario: 2
   _acompanyante: {fileID: 1916845226}
   _ataqueLigero: {fileID: 1227768518}
   _ataquePesado: {fileID: 1227768518}
+  _estaminaMax: 100
+  _costeEstaminaSalto: 10
+  _costeEstaminaCorrerPorSegundo: 10
+  _costeEstaminaAtaqueLigero: 10
+  _costeEstaminaAtaquePesado: 20
+  _costeEstaminaEsquivar: 10
+  _regeneracionEstaminaPorSegundo: 5
+  _estaminaUI: {fileID: 658990766}
 --- !u!114 &1227768518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4174,7 +4183,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1382781331}
-  m_LocalRotation: {x: 0.2799757, y: -0.00015605317, z: 0.00004551123, w: 0.9600071}
+  m_LocalRotation: {x: 0.2799757, y: -0.00015602013, z: 0.000045501594, w: 0.9600071}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4384,7 +4393,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1412090000}
-  m_LocalRotation: {x: 0.2449187, y: -0.0001575867, z: 0.000039808358, w: 0.96954364}
+  m_LocalRotation: {x: 0.2449187, y: -0.00015758669, z: 0.00003980835, w: 0.96954364}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

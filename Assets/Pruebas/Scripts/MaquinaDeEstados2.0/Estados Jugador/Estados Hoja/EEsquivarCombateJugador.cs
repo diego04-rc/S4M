@@ -16,7 +16,10 @@ public class EEsquivarCombateJugador : EstadoJugador
         {
             // Comprobamos si esta andando y corriendo
             if (_contexto.Andando && _contexto.Corriendo)
-            { CambiarEstado(_fabrica.CorriendoCombate()); }
+            {
+                if (_contexto.ReducirEstamina(_contexto.CosteEstaminaCorrerPorSegundo * Time.deltaTime))
+                { CambiarEstado(_fabrica.CorriendoCombate()); }
+            }
             // Si no, si esta andando
             else if (_contexto.Andando)
             { CambiarEstado(_fabrica.AndandoCombate()); }
@@ -37,7 +40,10 @@ public class EEsquivarCombateJugador : EstadoJugador
         { _contexto.DirEsquive = - Camera.main.transform.forward; }
         // Si no es el vector input
         else
-        { _contexto.DirEsquive = _contexto.VectorInput.normalized; }
+        { 
+            _contexto.DirEsquive = _contexto.VectorInput.normalized;
+            _contexto.ModeloPersonaje.forward = new Vector3(_contexto.DirEsquive.x, 0.0f, _contexto.DirEsquive.z);
+        }        
 
         // Iniciamos la velocidad de esquive a la maxima
         _contexto.VelActEsquive = _contexto.VelMaxEsquive;

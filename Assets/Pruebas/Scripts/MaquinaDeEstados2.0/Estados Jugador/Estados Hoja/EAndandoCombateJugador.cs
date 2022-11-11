@@ -16,13 +16,25 @@ public class EAndandoCombateJugador : EstadoJugador
         { CambiarEstado(_fabrica.QuietoCombate()); }
         // Si no, podemos pasar a correr
         else if (_contexto.Corriendo)
-        { CambiarEstado(_fabrica.CorriendoCombate()); }
+        {
+            if (_contexto.ReducirEstamina(_contexto.CosteEstaminaCorrerPorSegundo * Time.deltaTime))
+            { CambiarEstado(_fabrica.CorriendoCombate()); }
+        }
         // Si se pusa saltar, se realiza un esquive si no esta en cooldown
         else if (_contexto.Saltado && !_contexto.EnCoolDownEsquive)
-        { CambiarEstado(_fabrica.EsquivarCombate()); }
+        {
+            if (_contexto.ReducirEstamina(_contexto.CosteEstaminaEsquivar))
+            { CambiarEstado(_fabrica.EsquivarCombate()); }
+        }
         // Si ha atacado
-        else if (_contexto.EjecutadoAtaqueLigero || _contexto.EjecutadoAtaquePesado)
-        { CambiarEstado(_fabrica.AtacarCombate()); }
+        else if (_contexto.Atacado)
+        {
+            if (_contexto.EjecutadoAtaqueLigero &&
+                _contexto.ReducirEstamina(_contexto.CosteEstaminaAtaqueLigero))
+            { CambiarEstado(_fabrica.AtacarCombate()); }
+            else if (_contexto.ReducirEstamina(_contexto.CosteEstaminaAtaquePesado))
+            { CambiarEstado(_fabrica.AtacarCombate()); }
+        }
     }
 
     public override void EntrarEstado()
@@ -57,7 +69,7 @@ public class EAndandoCombateJugador : EstadoJugador
         // Corregimos la direccíon a la que mira el personaje
         Vector3 dirObjetivo = Camera.main.transform.forward;
         Vector3 direccion = Vector3.RotateTowards(_contexto.ModeloPersonaje.forward,
-            dirObjetivo, _contexto.VelDirAndando * Time.deltaTime, 0.0f);
+            dirObjetivo, _contexto.VelDirCombate * Time.deltaTime, 0.0f);
         direccion.y = 0.0f;
         _contexto.ModeloPersonaje.rotation = Quaternion.LookRotation(direccion);
 

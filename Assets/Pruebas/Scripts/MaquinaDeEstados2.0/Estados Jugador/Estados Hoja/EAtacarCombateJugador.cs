@@ -13,7 +13,10 @@ public class EAtacarCombateJugador : EstadoJugador
         {
             // Comprobamos si esta andando y corriendo
             if (_contexto.Andando && _contexto.Corriendo)
-            { CambiarEstado(_fabrica.CorriendoCombate()); }
+            {
+                if (_contexto.ReducirEstamina(_contexto.CosteEstaminaCorrerPorSegundo * Time.deltaTime))
+                { CambiarEstado(_fabrica.CorriendoCombate()); }
+            }
             // Si no, si esta andando
             else if (_contexto.Andando)
             { CambiarEstado(_fabrica.AndandoCombate()); }

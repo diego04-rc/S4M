@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MaquinaDeEstadosJugador : MonoBehaviour
 {
@@ -85,6 +86,9 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
     private Vector3 _movFinal;
     private float _movY;
 
+    // Velocidad correcion direccion en combate
+    [SerializeField] private float _velDirCombate;
+
     // Variable para controlar si hay algun enemigo fijado
     private bool _enemigoFijado;
 
@@ -118,7 +122,248 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
     private bool _ejecutadoAtaquePesado;
     private bool _ejecutadoAtaqueLigero;
 
+    // *Variables para el control de la estamina*
+
+    private float _estaminaActual;
+    [SerializeField] private float _estaminaMax;
+    [SerializeField] private float _costeEstaminaSalto;
+    [SerializeField] private float _costeEstaminaCorrerPorSegundo;
+    [SerializeField] private float _costeEstaminaAtaqueLigero;
+    [SerializeField] private float _costeEstaminaAtaquePesado;
+    [SerializeField] private float _costeEstaminaEsquivar;
+    [SerializeField] private float _regeneracionEstaminaPorSegundo;
+
+    // Imagen barra de estamina
+    [SerializeField] private Image _estaminaUI;
+
+    // *Fin variables control de la estamina*
+
     // Fin Variables Globales
+    //##############################################################
+
+    void Awake()
+    {
+        // Iniciamos las variables de estado
+        _fabricaEstados = new FabricaDeEstadosJugador(this);
+        _estadoActual = _fabricaEstados.EnTierraExploracion();
+        _estadoActual.EntrarEstado();
+
+        // Inputs activos por defecto
+        _inputsActivos = true;
+
+        // Inputs a falso por defecto
+        _saltado = false;
+        _andando = false;
+        _corriendo = false;
+        _atacado = false;
+
+        // Iniciamos las variables de movimento a cero
+        _velActual = 0.0f;
+        _vectorInput = Vector3.zero;
+        _movFinal = Vector3.zero;
+        _movY = 0.0f;
+
+        // Iniciamos que no hay enemigos fijados y su posicion a cero
+        _enemigoFijado = false;
+        _posFijado = Vector3.zero;
+
+        // Iniciamos la direccion del esquive a cero
+        _dirEsquive = Vector3.zero;
+
+        // Esquive no en cooldown
+        _enCoolDownEsquive = false;
+
+        // Camara del inventario desactivada
+        _camaraInventario.SetActive(false);
+
+        // No se ha abierto el inventario y el cooldown esta desactivado
+        _inventarioAbierto = false;
+        _enCoolDownInventario = false;
+
+        // Comenzamos con la estamina maxima
+        _estaminaActual = _estaminaMax;
+
+        // Iniciamos la continua recuperacion de estamina
+        StartCoroutine(RecuperacionDeEstamina());
+    }
+
+    void Update()
+    {
+        // Comprobamos los inputs del usuario si estan activos
+        if (_inputsActivos)
+        { ComprobarInputs(); }
+
+        // Actualizamos el estado actual
+        _estadoActual.UpdateEstado();
+
+        // Actualizamos el movimiento en Y
+        _movFinal.y = _movY;
+
+        Debug.Log(_movFinal);
+
+        // Movemos el personaje a partir del movimiento final
+        _controladorJugador.Move(_movFinal * Time.deltaTime);
+    }
+
+    // Metodo para comprobar los inputs del usuario
+    void ComprobarInputs()
+    {
+        // Comprobamos si se ha saltado
+        _saltado = false;
+        foreach (string axis in _AxisSaltar)
+        {
+            if (Input.GetAxis(axis) != 0.0f)
+            {
+                _saltado = true;
+                Saltar();
+                break;
+            }
+        }
+
+        // Comprobamos si se esta moviendo
+        _andando = false;
+        foreach (string axis in _AxisCaminar)
+        {
+            if (Input.GetAxis(axis) != 0.0f)
+            {
+                _andando = true;
+                Caminar();
+                break;
+            }
+        }
+
+        // Comprobamos si se esta corriendo
+        _corriendo = false;
+        foreach (string axis in _AxisCorrer)
+        {
+            if (Input.GetAxis(axis) != 0.0f)
+            {
+                _corriendo = true;
+                Correr();
+                break;
+            }
+        }
+
+        // Comprobamos si ha atacado
+        _atacado = false;
+        foreach (string axis in _AxisAtacar)
+        {
+            if (Input.GetAxis(axis) != 0.0f)
+            {
+                _atacado = true;
+                Atacar();
+                break;
+            }
+        }
+
+        // Comprobamos si se ha abierto el inventario
+        _inventarioAbierto = false;
+        if (Input.GetKeyUp(KeyCode.Q))
+        {
+            _inventarioAbierto = true;
+        }
+    }
+
+    // Metodo para comprobar si hay enemigos en el radio de combate
+    public bool EnemigosCerca()
+    { return _detectorEnemigos.ObtenerGameObjects().Count > 0; }
+
+    // Metodo para iniciar el cooldown del esquive
+    public void IniciarCoolDown()
+    {
+        StartCoroutine(IniciarCoolDownCorutina());
+    }
+
+    // Metodo para iniciar el cooldown del inventario
+    public void IniciarCoolDownInventario()
+    {
+        StartCoroutine(IniciarCoolDownInventarioCorutina());
+    }
+
+    // Metodo para reducir la estamina actual: devuelve true si se puede realizar
+    // la accion, y false en caso de que no
+    public bool ReducirEstamina(float reduccion)
+    {
+        if (_estaminaActual < reduccion)
+        { return false; }
+        else
+        {
+            _estaminaActual -= reduccion;
+            _estaminaUI.fillAmount = _estaminaActual / _estaminaMax;
+            return true;
+        }
+    }
+
+    // Corutina para iniciar el cooldown del esquive
+    private IEnumerator IniciarCoolDownCorutina()
+    {
+        _enCoolDownEsquive = true;
+        yield return new WaitForSeconds(_coolDownEsquive);
+        _enCoolDownEsquive = false;
+        yield break;
+    }
+
+    // Corutina para iniciar el cooldown del inventario
+    private IEnumerator IniciarCoolDownInventarioCorutina()
+    {
+        _enCoolDownInventario = true;
+        yield return new WaitForSeconds(_coolDownCamaraInventario);
+        _enCoolDownInventario = false;
+        yield break;
+    }
+
+    // Corutina para recuperar la estamina
+    private IEnumerator RecuperacionDeEstamina()
+    {
+        while (true)
+        {
+            yield return null;
+            _estaminaActual += _regeneracionEstaminaPorSegundo * Time.deltaTime;
+            if (_estaminaActual > _estaminaMax)
+            { _estaminaActual = _estaminaMax; }
+            _estaminaUI.fillAmount = _estaminaActual / _estaminaMax;
+        }
+    }
+
+    //##############################################################
+    // Metodos para las acciones de los inputs
+
+    void Saltar()
+    {
+        _saltado = true;
+    }
+
+    void Caminar()
+    {
+        _andando = true;
+        Vector3 delante = Camera.main.transform.forward * Input.GetAxis("Vertical");
+        Vector3 derecha = Camera.main.transform.right * Input.GetAxis("Horizontal");
+        delante.y = 0.0f; derecha.y = 0.0f;
+        _vectorInput = delante + derecha;
+        if (_vectorInput.magnitude > 1)
+        { _vectorInput = _vectorInput.normalized; }
+    }
+
+    void Correr()
+    {
+        _corriendo = true;
+    }
+
+    void Atacar()
+    {
+        if (Input.GetAxis("Fire1") != 0.0)
+        { 
+            _ejecutadoAtaqueLigero = true;
+            _ejecutadoAtaquePesado = false;
+        }
+        else
+        {
+            _ejecutadoAtaquePesado = true;
+            _ejecutadoAtaqueLigero = false;
+        }
+    }
+
+    // Fin metodos para las acciones de los inputs
     //##############################################################
 
     //##############################################################
@@ -242,6 +487,11 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
         get { return _movY; }
         set { _movY = value; }
     }
+    public float VelDirCombate
+    {
+        get { return _velDirCombate; }
+        set { _velDirCombate = value; }
+    }
     public bool EnemigoFijado
     {
         get { return _enemigoFijado; }
@@ -347,198 +597,52 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
         get { return _ejecutadoAtaquePesado; }
         set { _ejecutadoAtaquePesado = value; }
     }
+    public float EstaminaActual
+    {
+        get { return _estaminaActual; }
+        set { _estaminaActual = value; }
+    }
+    public float EstaminaMax
+    {
+        get { return _estaminaMax; }
+        set { _estaminaMax = value; }
+    }
+    public float CosteEstaminaSalto
+    {
+        get { return _costeEstaminaSalto; }
+        set { _costeEstaminaSalto = value; }
+    }
+    public float CosteEstaminaCorrerPorSegundo
+    {
+        get { return _costeEstaminaCorrerPorSegundo; }
+        set { _costeEstaminaCorrerPorSegundo = value; }
+    }
+    public float CosteEstaminaAtaqueLigero
+    {
+        get { return _costeEstaminaAtaqueLigero; }
+        set { _costeEstaminaAtaqueLigero = value; }
+    }
+    public float CosteEstaminaAtaquePesado
+    {
+        get { return _costeEstaminaAtaquePesado; }
+        set { _costeEstaminaAtaquePesado = value; }
+    }
+    public float CosteEstaminaEsquivar
+    {
+        get { return _costeEstaminaEsquivar; }
+        set { _costeEstaminaEsquivar = value; }
+    }
+    public float RegeneracionEstaminaPorSegundo
+    {
+        get { return _regeneracionEstaminaPorSegundo; }
+        set { _regeneracionEstaminaPorSegundo = value; }
+    }
+    public Image EstaminaUI
+    {
+        get { return _estaminaUI; }
+        set { _estaminaUI = value; }
+    }
 
     // Fin Getters y Setters
-    //##############################################################
-
-    void Awake()
-    {
-        // Iniciamos las variables de estado
-        _fabricaEstados = new FabricaDeEstadosJugador(this);
-        _estadoActual = _fabricaEstados.EnTierraExploracion();
-        _estadoActual.EntrarEstado();
-
-        // Inputs activos por defecto
-        _inputsActivos = true;
-
-        // Inputs a falso por defecto
-        _saltado = false;
-        _andando = false;
-        _corriendo = false;
-        _atacado = false;
-
-        // Iniciamos las variables de movimento a cero
-        _velActual = 0.0f;
-        _vectorInput = Vector3.zero;
-        _movFinal = Vector3.zero;
-        _movY = 0.0f;
-
-        // Iniciamos que no hay enemigos fijados y su posicion a cero
-        _enemigoFijado = false;
-        _posFijado = Vector3.zero;
-
-        // Iniciamos la direccion del esquive a cero
-        _dirEsquive = Vector3.zero;
-
-        // Esquive no en cooldown
-        _enCoolDownEsquive = false;
-
-        // Camara del inventario desactivada
-        _camaraInventario.SetActive(false);
-
-        // No se ha abierto el inventario y el cooldown esta desactivado
-        _inventarioAbierto = false;
-        _enCoolDownInventario = false;
-    }
-
-    void Update()
-    {
-        // Comprobamos los inputs del usuario si estan activos
-        if (_inputsActivos)
-        { ComprobarInputs(); }
-
-        // Actualizamos el estado actual
-        _estadoActual.UpdateEstado();
-
-        // Actualizamos el movimiento en Y
-        _movFinal.y = _movY;
-
-        Debug.Log(_movFinal);
-
-        // Movemos el personaje a partir del movimiento final
-        _controladorJugador.Move(_movFinal * Time.deltaTime);
-    }
-
-    // Metodo para comprobar los inputs del usuario
-    void ComprobarInputs()
-    {
-        // Comprobamos si se ha saltado
-        _saltado = false;
-        foreach (string axis in _AxisSaltar)
-        {
-            if (Input.GetAxis(axis) != 0.0f)
-            {
-                _saltado = true;
-                Saltar();
-                break;
-            }
-        }
-
-        // Comprobamos si se esta moviendo
-        _andando = false;
-        foreach (string axis in _AxisCaminar)
-        {
-            if (Input.GetAxis(axis) != 0.0f)
-            {
-                _andando = true;
-                Caminar();
-                break;
-            }
-        }
-
-        // Comprobamos si se esta corriendo
-        _corriendo = false;
-        foreach (string axis in _AxisCorrer)
-        {
-            if (Input.GetAxis(axis) != 0.0f)
-            {
-                _corriendo = true;
-                Correr();
-                break;
-            }
-        }
-
-        // Comprobamos si ha atacado
-        _atacado = false;
-        foreach (string axis in _AxisAtacar)
-        {
-            if (Input.GetAxis(axis) != 0.0f)
-            {
-                _atacado = true;
-                Atacar();
-                break;
-            }
-        }
-
-        // Comprobamos si se ha abierto el inventario
-        _inventarioAbierto = false;
-        if (Input.GetKeyUp(KeyCode.Q))
-        {
-            _inventarioAbierto = true;
-        }
-    }
-
-    // Metodo para comprobar si hay enemigos en el radio de combate
-    public bool EnemigosCerca()
-    { return _detectorEnemigos.ObtenerGameObjects().Count > 0; }
-
-    // Metodo para iniciar el cooldown del esquive
-    public void IniciarCoolDown()
-    {
-        StartCoroutine(IniciarCoolDownCorutina());
-    }
-
-    public void IniciarCoolDownInventario()
-    {
-        StartCoroutine(IniciarCoolDownInventarioCorutina());
-    }
-
-    // Corutina para iniciar el cooldown del esquive
-    private IEnumerator IniciarCoolDownCorutina()
-    {
-        _enCoolDownEsquive = true;
-        yield return new WaitForSeconds(_coolDownEsquive);
-        _enCoolDownEsquive = false;
-        yield break;
-    }
-
-    // Corutina para iniciar el cooldown del inventario
-    private IEnumerator IniciarCoolDownInventarioCorutina()
-    {
-        _enCoolDownInventario = true;
-        yield return new WaitForSeconds(_coolDownCamaraInventario);
-        _enCoolDownInventario = false;
-        yield break;
-    }
-
-    //##############################################################
-    // Metodos para las acciones de los inputs
-
-    void Saltar()
-    {
-        _saltado = true;
-    }
-
-    void Caminar()
-    {
-        _andando = true;
-        Vector3 delante = Camera.main.transform.forward * Input.GetAxis("Vertical");
-        Vector3 derecha = Camera.main.transform.right * Input.GetAxis("Horizontal");
-        delante.y = 0.0f; derecha.y = 0.0f;
-        _vectorInput = delante + derecha;
-        if (_vectorInput.magnitude > 1)
-        { _vectorInput = _vectorInput.normalized; }
-    }
-
-    void Correr()
-    {
-        _corriendo = true;
-    }
-
-    void Atacar()
-    {
-        if (Input.GetAxis("Fire1") != 0.0)
-        { 
-            _ejecutadoAtaqueLigero = true;
-            _ejecutadoAtaquePesado = false;
-        }
-        else
-        {
-            _ejecutadoAtaquePesado = true;
-            _ejecutadoAtaqueLigero = false;
-        }
-    }
-
-    // Fin metodos para las acciones de los inputs
     //##############################################################
 }

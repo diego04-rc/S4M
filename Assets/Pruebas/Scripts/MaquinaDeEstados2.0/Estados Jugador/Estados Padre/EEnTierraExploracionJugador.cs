@@ -13,7 +13,9 @@ public class EEnTierraExploracionJugador : EstadoJugador
     public override void ComprobarCambioEstado()
     {
         // Comprobamos si el jugador pasa a estar en el aire (salto o caida)
-        if (_contexto.Saltado || !_contexto.ControladorJugador.isGrounded)
+        if (_contexto.Saltado && _contexto.ReducirEstamina(_contexto.CosteEstaminaSalto))
+        { CambiarEstado(_fabrica.EnAireExploracion()); }
+        else if (!_contexto.ControladorJugador.isGrounded)
         { CambiarEstado(_fabrica.EnAireExploracion()); }
         // Si no, comprobamos si pasa a estar en combate
         else if (_contexto.EnemigosCerca())
@@ -32,6 +34,9 @@ public class EEnTierraExploracionJugador : EstadoJugador
         // Nos aseguramos de que se detecta que el jugador esta en el suelo 
         // añadiendo algo de velocidad en Y
         _contexto.MovY = -10.0f;
+
+        // Movimiento a cero
+        _contexto.MovFinal = Vector3.zero;
     }
 
     public override void IniciarSubestado()

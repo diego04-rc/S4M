@@ -13,7 +13,10 @@ public class EQuietoJugador : EstadoJugador
     {
         // Si estamos andando y corriendo
         if (_contexto.Andando && _contexto.Corriendo)
-        { CambiarEstado(_fabrica.Corriendo()); }
+        {
+            if (_contexto.ReducirEstamina(_contexto.CosteEstaminaCorrerPorSegundo * Time.deltaTime))
+            { CambiarEstado(_fabrica.Corriendo()); }
+        }
         // Si solo estamos andando
         else if (_contexto.Andando)
         { CambiarEstado(_fabrica.Andando()); }

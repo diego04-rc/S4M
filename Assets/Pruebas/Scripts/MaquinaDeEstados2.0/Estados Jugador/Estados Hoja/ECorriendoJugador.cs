@@ -15,7 +15,8 @@ public class ECorriendoJugador : EstadoJugador
         if (!_contexto.Andando)
         { CambiarEstado(_fabrica.Quieto()); }
         // Si dejamos de correr pasamos a andar
-        else if (!_contexto.Corriendo)
+        else if (!_contexto.Corriendo || 
+            !_contexto.ReducirEstamina(_contexto.CosteEstaminaCorrerPorSegundo * Time.deltaTime))
         { CambiarEstado(_fabrica.Andando()); }
     }
 
