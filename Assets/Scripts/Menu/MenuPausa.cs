@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class MenuPausa : MonoBehaviour
 {
     public GameObject menuPausa;
+    public GameObject menu;
     private bool menuOn;
     // Start is called before the first frame update
     void Start(){   }
@@ -19,13 +20,14 @@ public class MenuPausa : MonoBehaviour
         if (menuOn)
         {
             menuPausa.SetActive(true);
+            menu.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
         else {
             menuPausa.SetActive(false);
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            // Cursor.lockState = CursorLockMode.Locked;
+            // Cursor.visible = false;
         }
     }
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -48,10 +49,10 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
     private bool _corriendo;
     private bool _atacado;
 
+    [Header("Componentes del jugador")]
     // Controlador del personaje jugador
     [Tooltip("Controlador del jugador")]
-    [SerializeField]
-    private CharacterController _controladorJugador;
+    [SerializeField] private CharacterController _controladorJugador;
 
     // Modelo del personaje
     [Tooltip("Modelo del jugador")]
@@ -63,6 +64,7 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
     [SerializeField]
     private DetectorTrigger _detectorEnemigos;
 
+    [Header("Velocidades del jugador")]
     // Varibles para controlar las distintas velocidades
     // Velocidad Actual
     private float _velActual;
@@ -106,15 +108,32 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
     [SerializeField] private float _coolDownEsquive;
     private bool _enCoolDownEsquive;
 
+    [Header("Variables del inventario")]
+    // *Inicio variables control del inventario*
+
     // Variables para la camara del inventario
     [SerializeField] private GameObject _camaraInventario;
     [SerializeField] private float _coolDownCamaraInventario;
     private bool _inventarioAbierto;
+    private bool _botonInventarioPulsado;
     private bool _enCoolDownInventario;
 
+    // Menu inventario
+    [SerializeField] private Canvas _menuInventario;
+
+    // Fondos del inventario
+    [SerializeField] private GameObject _fondoMochila;
+    [SerializeField] private GameObject _fondoStats;
+    [SerializeField] private GameObject _fondoMapaMundo;
+    [SerializeField] private GameObject _fondoMapaPlanetas;
+
+    // *Fin Variables control del inventario*
+
+    [Header("Esfera Acompanyante")]
     // Script que controla a la bola acompañante
     [SerializeField] private EsferaAcompanyante _acompanyante;
 
+    [Header("Variables de la estamina y ataques")]
     // Variables para los ataques
     [SerializeField] private Ataque _ataqueLigero;
     [SerializeField] private Ataque _ataquePesado;
@@ -122,7 +141,7 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
     private bool _ejecutadoAtaquePesado;
     private bool _ejecutadoAtaqueLigero;
 
-    // *Variables para el control de la estamina*
+    // *Inicio Variables para el control de la estamina*
 
     private float _estaminaActual;
     [SerializeField] private float _estaminaMax;
@@ -137,6 +156,8 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
     [SerializeField] private Image _estaminaUI;
 
     // *Fin variables control de la estamina*
+
+   
 
     // Fin Variables Globales
     //##############################################################
@@ -179,6 +200,17 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
         // No se ha abierto el inventario y el cooldown esta desactivado
         _inventarioAbierto = false;
         _enCoolDownInventario = false;
+
+        // Menu de inventario desactivado
+        _menuInventario.enabled = false;
+
+        // Fondo inventario inicial a la mochila
+        _fondoMochila.SetActive(true);
+
+        // Desactivamos el resto de fondos
+        _fondoStats.SetActive(false);
+        _fondoMapaMundo.SetActive(false);
+        _fondoMapaPlanetas.SetActive(false);
 
         // Comenzamos con la estamina maxima
         _estaminaActual = _estaminaMax;
@@ -258,9 +290,10 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
 
         // Comprobamos si se ha abierto el inventario
         _inventarioAbierto = false;
-        if (Input.GetKeyUp(KeyCode.Q))
+        if (Input.GetKeyUp(KeyCode.Q) || _botonInventarioPulsado)
         {
             _inventarioAbierto = true;
+            _botonInventarioPulsado = false;
         }
     }
 
@@ -364,6 +397,47 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
     }
 
     // Fin metodos para las acciones de los inputs
+    //##############################################################
+
+    //##############################################################
+    // Inicio metodos para el inventario
+
+    public void CerrarInventario()
+    { _botonInventarioPulsado = true; }
+
+    public void BotonInventarioMochila()
+    {
+        _fondoMochila.SetActive(true);
+        _fondoStats.SetActive(false);
+        _fondoMapaMundo.SetActive(false);
+        _fondoMapaPlanetas.SetActive(false);
+    }
+
+    public void BotonInventarioStats()
+    {
+        _fondoMochila.SetActive(false);
+        _fondoStats.SetActive(true);
+        _fondoMapaMundo.SetActive(false);
+        _fondoMapaPlanetas.SetActive(false);
+    }
+
+    public void BotonInventarioMapaMundo()
+    {
+        _fondoMochila.SetActive(false);
+        _fondoStats.SetActive(false);
+        _fondoMapaMundo.SetActive(true);
+        _fondoMapaPlanetas.SetActive(false);
+    }
+
+    public void BotonInventarioMapaPlanetas()
+    {
+        _fondoMochila.SetActive(false);
+        _fondoStats.SetActive(false);
+        _fondoMapaMundo.SetActive(false);
+        _fondoMapaPlanetas.SetActive(true);
+    }
+
+    // Fin metodos para el inventario
     //##############################################################
 
     //##############################################################
@@ -567,6 +641,13 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
         get { return _enCoolDownInventario; }
         set { _enCoolDownInventario = value; }
     }
+
+    public Canvas MenuInventario
+    { 
+        get { return _menuInventario; }
+        set { _menuInventario = value; }
+    }
+
     public EsferaAcompanyante Acompanyante
     {
         get { return _acompanyante; }

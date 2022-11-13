@@ -32,6 +32,10 @@ public class EInteractuandoConEntornoJugador : EstadoJugador
 
         // El acompañante pasa a estar en posicion de inventario
         _contexto.Acompanyante.cambiarEstado(EsferaAcompanyante.EstadoAcompanyante.Inventario);
+
+        // Reactivamos el cursor
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     public override void IniciarSubestado() {}
@@ -46,10 +50,22 @@ public class EInteractuandoConEntornoJugador : EstadoJugador
 
         // El acompañante vuelve a seguir
         _contexto.Acompanyante.cambiarEstado(EsferaAcompanyante.EstadoAcompanyante.Siguiendo);
+
+        // Desactivamos el cursor
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        // Desactivamos el inventario
+        _contexto.MenuInventario.enabled = false;
     }
 
     public override void UpdateEstado()
     {
+        // En cuanto la bola acompanyante este en posicion, mostramos el inventario
+        if (_contexto.Acompanyante.EstadoActual == 
+            EsferaAcompanyante.EstadoAcompanyante.MostrandoInventario)
+            _contexto.MenuInventario.enabled = true;
+
         // Comprobamos un posible cambio de estado
         ComprobarCambioEstado();
     }

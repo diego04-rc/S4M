@@ -33,8 +33,10 @@ public class EsferaAcompanyante : MonoBehaviour
     [SerializeField]
     private float _vel;
 
-    public enum EstadoAcompanyante { Siguiendo, Inventario };
+    public enum EstadoAcompanyante { Siguiendo, Inventario, MostrandoInventario };
     private EstadoAcompanyante _estadoActual;
+
+    public EstadoAcompanyante EstadoActual { get { return _estadoActual; } }
 
     void Start()
     {
@@ -68,8 +70,11 @@ public class EsferaAcompanyante : MonoBehaviour
                 posObjetivo.y - transform.position.y,
                 posObjetivo.z - transform.position.z);
 
-            if (dir.magnitude > 0.01f)
+            if (dir.magnitude > 0.1f)
                 transform.Translate(dir * Time.deltaTime * _vel, Space.World);
+            else
+                _estadoActual = EstadoAcompanyante.MostrandoInventario;
+                
 
             transform.rotation = Quaternion.LookRotation(Vector3.RotateTowards(transform.forward, _inventario.forward, 5.0f * Time.deltaTime, 0.0f));
         }
