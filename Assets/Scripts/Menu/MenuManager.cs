@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class MenuManager : MonoBehaviour
 {
     public void Jugar() {
-        SceneManager.LoadScene("World1");
+        SceneManager.LoadScene("Prologo");
     }
 
     public void Creditos() {

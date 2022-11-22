@@ -5,25 +5,53 @@ using UnityEngine.SceneManagement;
 
 public class TransicionEscenas : MonoBehaviour
 {
-    private Animator animator;
-    [SerializeField] private AnimationClip animacionFinal;
+    public Animator animator;
+    private int seconds = 9;
+    public GameObject[] imgPrologo;
+    private int puntero;
+    int i = 0;
     // Start is called before the first frame update
     void Start()
     {
-        animator = GetComponent<Animator>();
+        puntero = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            StartCoroutine(CambiarEscena());
+        if (i == 0) {
+            StartCoroutine(CambiarImagen());
+            i++;
+        }
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            GameSecene();
         }
     }
 
-    IEnumerator CambiarEscena() {
-        animator.SetTrigger("Iniciar");
-        yield return new WaitForSeconds(animacionFinal.length);
+    IEnumerator CambiarImagen() {
+        while (puntero < imgPrologo.Length) {
+            if (puntero == 5) { seconds = 5; }
+            FadeIn();
+            Invoke("FadeOut", seconds - 1);
+            yield return new WaitForSeconds(seconds);
+            imgPrologo[puntero].SetActive(false);
+            puntero++;
+            if (puntero < imgPrologo.Length)
+            {
+                imgPrologo[puntero].SetActive(true);
+            }
+            else { GameSecene(); }
+        }
+    }
+    public void FadeOut() {
+        animator.Play("FadeOut");
+    }
+
+    public void FadeIn() {
+        animator.Play("FadeIn");
+    }
+
+    public void GameSecene() {
         SceneManager.LoadScene("World1");
     }
 }
