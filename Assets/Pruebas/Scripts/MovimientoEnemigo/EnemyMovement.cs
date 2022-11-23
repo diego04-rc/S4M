@@ -6,16 +6,17 @@ using UnityEngine.AI;
 public class EnemyMovement : MonoBehaviour
 {
     // Start is called before the first frame update
-    public float rangoDeAlerta;
-    public LayerMask capaDelJugador;
+    /*public float rangoDeAlerta;
+    public LayerMask capaDelJugador;*/
     bool estarAlerta;
-    public Transform posJugador;
-    public float velocidad;
+    private Transform posJugador;
+    //public float velocidad;
     private NavMeshAgent navMeshAgent;
 
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
+        estarAlerta = false;
     }
 
     void Start()
@@ -26,7 +27,7 @@ public class EnemyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        estarAlerta = Physics.CheckSphere(transform.position, rangoDeAlerta, capaDelJugador);
+        //estarAlerta = Physics.CheckSphere(transform.position, rangoDeAlerta, capaDelJugador);
         if (estarAlerta)
         {
             //transform.LookAt(posJugador);
@@ -39,7 +40,24 @@ public class EnemyMovement : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, rangoDeAlerta);
+        /*Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, rangoDeAlerta);*/
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            estarAlerta = true;
+            posJugador = other.gameObject.transform;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            estarAlerta = false;
+        }
     }
 }
