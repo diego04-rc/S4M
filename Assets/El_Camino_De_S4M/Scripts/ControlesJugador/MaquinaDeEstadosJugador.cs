@@ -38,8 +38,6 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
     private EstadoJugador _estadoActual;
     private FabricaDeEstadosJugador _fabricaEstados;
 
-    
-
     // Variable para activar y desactivar los inputs del usuario
     private bool _inputsActivos;
 
@@ -113,6 +111,7 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
 
     // Variables para la camara del inventario
     [SerializeField] private GameObject _camaraInventario;
+    [SerializeField] private GameObject _camaraNormal;
     [SerializeField] private float _coolDownCamaraInventario;
     private bool _inventarioAbierto;
     private bool _botonInventarioPulsado;
@@ -197,6 +196,9 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
         // Camara del inventario desactivada
         _camaraInventario.SetActive(false);
 
+        // Camara normal siempre activa
+        _camaraNormal.SetActive(true);
+
         // No se ha abierto el inventario y el cooldown esta desactivado
         _inventarioAbierto = false;
         _enCoolDownInventario = false;
@@ -217,6 +219,9 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
 
         // Iniciamos la continua recuperacion de estamina
         StartCoroutine(RecuperacionDeEstamina());
+
+        // El inventario usara la camara principal
+        _menuInventario.worldCamera = Camera.main;
     }
 
     void Update()
