@@ -5,6 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class ControladorMenuPrincipal : MonoBehaviour
 {
+    // Menu principal
+    [Tooltip("Gameobject del menu principal")]
+    [SerializeField]
+    private GameObject _menuPrincipal;
+
+    // Menu opciones
+    [Tooltip("Gameobject del menu de opciones")]
+    [SerializeField]
+    private GameObject _menuOpciones;
+
+
     // Callback del boton jugar
     public void botonJugarPulsado()
     {
@@ -15,8 +26,11 @@ public class ControladorMenuPrincipal : MonoBehaviour
     // Callback del boton de opciones
     public void botonOpcionesPulsado()
     {
-        // Quitamos la visibilidad del menu
+        // Desactivamos el menu principal
+        _menuPrincipal.SetActive(false);
 
+        // Activamos el menu de opciones
+        _menuOpciones.SetActive(true);
     }
 
     // Callback del boton de salir
@@ -31,5 +45,15 @@ public class ControladorMenuPrincipal : MonoBehaviour
     {
         // Abrimos la escena de los creditos
         SceneManager.LoadScene("Creditos");
+    }
+
+    // Callback del boton de volver de opciones
+    public void botonVolverPulsado()
+    {
+        // Desactivamos las opciones
+        _menuOpciones.SetActive(false);
+
+        // Activamos el menu principal
+        _menuPrincipal.SetActive(true);
     }
 }
