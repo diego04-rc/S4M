@@ -21,7 +21,7 @@ public class EnemyMovement : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -59,5 +59,10 @@ public class EnemyMovement : MonoBehaviour
         {
             estarAlerta = false;
         }
+    }
+
+    public bool EstaAlerta()
+    {
+        return estarAlerta;
     }
 }
