@@ -50,12 +50,17 @@ public class DetectorPatrolPoint : MonoBehaviour
     {
         if (other.CompareTag("PatrolPoint") & !this.gameObject.GetComponentInParent<EnemyMovement>().EstaAlerta())
         {
-            int randomPosition = UnityEngine.Random.Range(0, numPoints);
-            //Si el indice generado es igual al antiguo debe volver a generarse uno nuevo hasta que sean distintos
-            while (randomPosition == indexPoint) randomPosition = UnityEngine.Random.Range(0, numPoints);
-            indexPoint = randomPosition;
-            enemyPoint = patrolPoints[indexPoint];
-            navMeshAgent.SetDestination(enemyPoint.position);
+            CalcularPatrulla();
         }
+    }
+
+    public void CalcularPatrulla()
+    {
+        int randomPosition = UnityEngine.Random.Range(0, numPoints);
+        //Si el indice generado es igual al antiguo debe volver a generarse uno nuevo hasta que sean distintos
+        while (randomPosition == indexPoint) randomPosition = UnityEngine.Random.Range(0, numPoints);
+        indexPoint = randomPosition;
+        enemyPoint = patrolPoints[indexPoint];
+        navMeshAgent.SetDestination(enemyPoint.position);
     }
 }

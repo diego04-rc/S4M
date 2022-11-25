@@ -58,11 +58,17 @@ public class EnemyMovement : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             estarAlerta = false;
+            ReiniciarPatrulla();
         }
     }
 
     public bool EstaAlerta()
     {
         return estarAlerta;
+    }
+
+    private void ReiniciarPatrulla()
+    {
+        this.gameObject.GetComponentInChildren<DetectorPatrolPoint>().CalcularPatrulla();
     }
 }
