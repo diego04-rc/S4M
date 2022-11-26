@@ -12,10 +12,13 @@ public class EnemyMovement : MonoBehaviour
     private Transform posJugador;
     //public float velocidad;
     private NavMeshAgent navMeshAgent;
+    private Rigidbody temporalRigidBody;
+    private bool rbActive;
 
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
+        temporalRigidBody = GetComponent<Rigidbody>();
         estarAlerta = false;
     }
 

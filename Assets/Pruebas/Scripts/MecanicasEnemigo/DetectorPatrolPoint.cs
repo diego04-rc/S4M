@@ -63,4 +63,14 @@ public class DetectorPatrolPoint : MonoBehaviour
         enemyPoint = patrolPoints[indexPoint];
         navMeshAgent.SetDestination(enemyPoint.position);
     }
+
+    public void setEnemyZone(GameObject zone)
+    {
+        enemyZone = zone;
+    }
+
+    public void setNumPoints(int num)
+    {
+        numPoints = num;
+    }
 }
