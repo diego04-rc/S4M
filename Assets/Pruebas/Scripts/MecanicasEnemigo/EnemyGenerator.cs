@@ -35,6 +35,7 @@ public class EnemyGenerator : MonoBehaviour
     private float longZ;
     private float tiempo;
     private bool activo;
+    private Transform[] generatorPoints;
 
     void Start()
     {
@@ -46,6 +47,11 @@ public class EnemyGenerator : MonoBehaviour
         longZ = transform.localScale.z;
         tiempo = 0f;
         activo = true;
+        generatorPoints = new Transform[maxEnemigos];
+        for(int i = 0; i < maxEnemigos; i++)
+        {
+            generatorPoints[i] = transform.GetChild(i);
+        }
         StartCoroutine(spawn());
     }
 
@@ -82,11 +88,28 @@ public class EnemyGenerator : MonoBehaviour
         {
             int numEnemigos = UnityEngine.Random.Range(minEnemigos, maxEnemigos);
 
+            int[] generatorPos = new int[numEnemigos];
+
+            generatorPos[0] = UnityEngine.Random.Range(0, maxEnemigos);
+            for (int i = 1; i < numEnemigos; i++)
+            {
+                int pos = 0;
+                bool noRepetido = false;
+                while (!noRepetido)
+                {
+                    pos = UnityEngine.Random.Range(0, maxEnemigos);
+                    int j = 0;
+                    for (j = 0; j < i && pos != generatorPos[j]; j++) ;
+                    noRepetido = (j == i);
+                }
+                generatorPos[i] = pos;
+            }
+
             int numEnemTipo1 =(int) (ratioEnemigo1 * numEnemigos);
 
             int numEnemTipo2 = (int)(ratioEnemigo2 * numEnemigos);
 
-            float[] posEnemigosX = new float[numEnemigos];
+            /*float[] posEnemigosX = new float[numEnemigos];
             float[] posEnemigosZ = new float[numEnemigos];
             for (int i = 0; i < numEnemigos; i++)
             {
@@ -94,18 +117,18 @@ public class EnemyGenerator : MonoBehaviour
                 float puntoGeneracionZ = UnityEngine.Random.Range((posZ - longZ / 2), (posZ + longZ / 2));
                 posEnemigosX[i] = puntoGeneracionX;
                 posEnemigosZ[i] = puntoGeneracionZ;
-            }
+            }*/
             for (int i = 0; i < numEnemTipo1; i++)
             {
                 enemigo1.GetComponentInChildren<DetectorPatrolPoint>().setEnemyZone(enemyZone);
                 enemigo1.GetComponentInChildren<DetectorPatrolPoint>().setNumPoints(numPoints);
-                Instantiate(enemigo1, new Vector3(posEnemigosX[i], alturaGeneracion, posEnemigosZ[i]), transform.rotation);
+                Instantiate(enemigo1, generatorPoints[generatorPos[i]].position, transform.rotation);
             }
-            for (int i = 0; i < numEnemTipo1; i++)
+            for (int i = numEnemTipo1; i < (numEnemTipo1 + numEnemTipo2); i++)
             {
                 enemigo2.GetComponentInChildren<DetectorPatrolPoint>().setEnemyZone(enemyZone);
                 enemigo2.GetComponentInChildren<DetectorPatrolPoint>().setNumPoints(numPoints);
-                Instantiate(enemigo2, new Vector3(posEnemigosX[i], alturaGeneracion, posEnemigosZ[i]), transform.rotation);
+                Instantiate(enemigo2, generatorPoints[generatorPos[i]].position, transform.rotation);
             }
         }
     }
