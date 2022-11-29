@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MaquinaDeEstadosJugador : MonoBehaviour
@@ -123,6 +124,7 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
     // Fondos del inventario
     [SerializeField] private GameObject _fondoMochila;
     [SerializeField] private GameObject _fondoStats;
+    [SerializeField] private GameObject _fondoMapas;
     [SerializeField] private GameObject _fondoMapaMundo;
     [SerializeField] private GameObject _fondoMapaPlanetas;
 
@@ -156,7 +158,19 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
 
     // *Fin variables control de la estamina*
 
-   
+    // Variable para saber si el juego esta en pausa
+    private bool _pausado;
+
+    [Header("Menu de pausa")]
+    // Gameobject con el menu de pausa del HUD
+    [Tooltip("Gameobject con el menu de pausa")]
+    [SerializeField]
+    private GameObject _menuPausa;
+
+    // Gameobject con el menu de opciones
+    [Tooltip("Gameobject con el menu de opciones")]
+    [SerializeField]
+    private GameObject _menuOpciones;
 
     // Fin Variables Globales
     //##############################################################
@@ -211,8 +225,7 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
 
         // Desactivamos el resto de fondos
         _fondoStats.SetActive(false);
-        _fondoMapaMundo.SetActive(false);
-        _fondoMapaPlanetas.SetActive(false);
+        _fondoMapas.SetActive(false);
 
         // Comenzamos con la estamina maxima
         _estaminaActual = _estaminaMax;
@@ -222,10 +235,31 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
 
         // El inventario usara la camara principal
         _menuInventario.worldCamera = Camera.main;
+
+        // El juego inicialmente no esta pausado
+        _pausado = false;
     }
 
     void Update()
     {
+        // Comprobamos si se ha pausado o despausado el juego
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (_pausado)
+            {
+                _menuPausa.SetActive(false);
+                Time.timeScale = 1.0f;
+                _pausado = false;
+            }
+            else
+            {
+                _menuPausa.SetActive(true);
+                _pausado = true;
+                Time.timeScale = 0.0f;
+                return;
+            }
+        }
+
         // Comprobamos los inputs del usuario si estan activos
         if (_inputsActivos)
         { ComprobarInputs(); }
@@ -414,35 +448,58 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
     {
         _fondoMochila.SetActive(true);
         _fondoStats.SetActive(false);
-        _fondoMapaMundo.SetActive(false);
-        _fondoMapaPlanetas.SetActive(false);
+        _fondoMapas.SetActive(false);
     }
 
     public void BotonInventarioStats()
     {
         _fondoMochila.SetActive(false);
         _fondoStats.SetActive(true);
-        _fondoMapaMundo.SetActive(false);
-        _fondoMapaPlanetas.SetActive(false);
+        _fondoMapas.SetActive(false);
     }
 
     public void BotonInventarioMapaMundo()
     {
         _fondoMochila.SetActive(false);
         _fondoStats.SetActive(false);
-        _fondoMapaMundo.SetActive(true);
-        _fondoMapaPlanetas.SetActive(false);
+        _fondoMapas.SetActive(true);
     }
 
-    public void BotonInventarioMapaPlanetas()
+    public void BotonInventarioCambioMapa()
     {
-        _fondoMochila.SetActive(false);
-        _fondoStats.SetActive(false);
-        _fondoMapaMundo.SetActive(false);
-        _fondoMapaPlanetas.SetActive(true);
+        _fondoMapaMundo.SetActive(!_fondoMapaMundo.activeSelf);
+        _fondoMapaPlanetas.SetActive(!_fondoMapaPlanetas.activeSelf);
     }
 
     // Fin metodos para el inventario
+    //##############################################################
+
+    //##############################################################
+    // Inicio metodos del menu de pausa
+
+    public void BotonContinuarPulsado()
+    {
+        _menuPausa.SetActive(false);
+        Time.timeScale = 1.0f;
+        _pausado = false;
+    }
+
+    public void BotonOpcionesPulsado()
+    {
+        _menuOpciones.SetActive(true);
+    }
+
+    public void BotonVolverPulsado()
+    {
+        _menuOpciones.SetActive(false);
+    }
+
+    public void BotonSalirPulsado()
+    {
+        SceneManager.LoadScene("MenuPrincipal");
+    }
+
+    // Fin metodos del menu de pausa
     //##############################################################
 
     //##############################################################
