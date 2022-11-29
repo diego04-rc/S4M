@@ -16,18 +16,21 @@ public class DetectorPatrolPoint : MonoBehaviour
     private int numPoints;
     private Transform[] patrolPoints;
     private Transform enemyPoint;
+    //Indica el indice seleccionado
+    private int indexPoint;
 
     private void Awake()
     {
         navMeshAgent = GetComponentInParent<NavMeshAgent>();
         patrolPoints = new Transform[numPoints];
+        //Obtenemos todos los puntos de patrulla, siendo estos hijos de la zona enemiga
         for (int i = 0; i < numPoints; i++) patrolPoints[i] = enemyZone.transform.GetChild(i).gameObject.transform;
     }
 
     void Start()
     {
-        int randomPosition = UnityEngine.Random.Range(0, numPoints - 1);
-        enemyPoint = patrolPoints[randomPosition];
+        indexPoint = UnityEngine.Random.Range(0, numPoints);
+        enemyPoint = patrolPoints[indexPoint];
         navMeshAgent.SetDestination(enemyPoint.position);
     }
 
@@ -47,9 +50,27 @@ public class DetectorPatrolPoint : MonoBehaviour
     {
         if (other.CompareTag("PatrolPoint") & !this.gameObject.GetComponentInParent<EnemyMovement>().EstaAlerta())
         {
-            int randomPosition = UnityEngine.Random.Range(0, numPoints - 1);
-            enemyPoint = patrolPoints[randomPosition];
-            navMeshAgent.SetDestination(enemyPoint.position);
+            CalcularPatrulla();
         }
+    }
+
+    public void CalcularPatrulla()
+    {
+        int randomPosition = UnityEngine.Random.Range(0, numPoints);
+        //Si el indice generado es igual al antiguo debe volver a generarse uno nuevo hasta que sean distintos
+        while (randomPosition == indexPoint) randomPosition = UnityEngine.Random.Range(0, numPoints);
+        indexPoint = randomPosition;
+        enemyPoint = patrolPoints[indexPoint];
+        navMeshAgent.SetDestination(enemyPoint.position);
+    }
+
+    public void setEnemyZone(GameObject zone)
+    {
+        enemyZone = zone;
+    }
+
+    public void setNumPoints(int num)
+    {
+        numPoints = num;
     }
 }
