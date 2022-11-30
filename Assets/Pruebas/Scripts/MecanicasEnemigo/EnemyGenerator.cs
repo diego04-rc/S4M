@@ -46,7 +46,7 @@ public class EnemyGenerator : MonoBehaviour
         longY = transform.localScale.y;
         longZ = transform.localScale.z;
         tiempo = 0f;
-        activo = true;
+        activo = false;
         generatorPoints = new Transform[maxEnemigos];
         for(int i = 0; i < maxEnemigos; i++)
         {
@@ -225,7 +225,7 @@ public class EnemyGenerator : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            activo = false;
+            activo = true;
         }
     }
 
@@ -233,7 +233,7 @@ public class EnemyGenerator : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            activo = true;
+            activo = false;
         }
     }
 }
