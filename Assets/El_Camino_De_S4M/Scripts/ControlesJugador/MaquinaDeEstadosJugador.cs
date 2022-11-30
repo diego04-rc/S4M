@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -23,6 +24,10 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
         InteractuandoConEntorno}
 
     public enum Subestado {CombateLibre, EnemigoFijado, EstadoVacio}
+
+    public Camera camaraPrincipal;
+
+    public Animator animator;
 
     // Variables con el estado actual
     private EstadoHoja _estadoHojaActual;
@@ -242,6 +247,19 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
 
     void Update()
     {
+
+        if (EstadoHojaActual == EstadoHoja.Andando || EstadoHojaActual == EstadoHoja.AndandoCombate
+            || EstadoHojaActual == EstadoHoja.AndandoCombateFijando)
+            animator.SetBool("Andando", true);
+        else
+            animator.SetBool("Andando", false);
+
+        if (EstadoHojaActual == EstadoHoja.Corriendo || EstadoHojaActual == EstadoHoja.CorriendoCombate
+            || EstadoHojaActual == EstadoHoja.CorriendoCombateFijando)
+            animator.SetBool("Corriendo", true);
+        else
+            animator.SetBool("Corriendo", false);
+
         // Comprobamos si se ha pausado o despausado el juego
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -408,8 +426,8 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
     void Caminar()
     {
         _andando = true;
-        Vector3 delante = Camera.main.transform.forward * Input.GetAxis("Vertical");
-        Vector3 derecha = Camera.main.transform.right * Input.GetAxis("Horizontal");
+        Vector3 delante = camaraPrincipal.transform.forward * Input.GetAxis("Vertical");
+        Vector3 derecha = camaraPrincipal.transform.right * Input.GetAxis("Horizontal");
         delante.y = 0.0f; derecha.y = 0.0f;
         _vectorInput = delante + derecha;
         if (_vectorInput.magnitude > 1)
