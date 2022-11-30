@@ -34,7 +34,7 @@ public class EnemyGenerator : MonoBehaviour
     private float longY;
     private float longZ;
     private float tiempo;
-    private bool activo;
+    public bool activo;
     private Transform[] generatorPoints;
 
     void Start()
