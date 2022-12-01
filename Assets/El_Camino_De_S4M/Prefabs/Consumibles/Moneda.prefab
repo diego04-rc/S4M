@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6915664053442810420}
   - component: {fileID: 9154595446704923961}
   - component: {fileID: 3086015633898367362}
-  - component: {fileID: 6279351777215835499}
+  - component: {fileID: 2436517337034499843}
   m_Layer: 0
   m_Name: Moneda
   m_TagString: Untagged
@@ -95,11 +95,11 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5000001
+  m_Radius: 0.93
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!114 &6279351777215835499
+--- !u!114 &2436517337034499843
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

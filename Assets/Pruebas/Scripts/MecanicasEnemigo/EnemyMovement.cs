@@ -15,6 +15,7 @@ public class EnemyMovement : MonoBehaviour
     private Rigidbody temporalRigidBody;
     private bool rbActive;
 
+
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();

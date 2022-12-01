@@ -9,7 +9,7 @@ public class AtaqueEjemplo : Ataque
         Debug.Log("Efectos aplicados a: ");
         foreach(GameObject objeto in objetosEnTrigger)
         {
-            Debug.Log(objeto.name);
+            Destroy(objeto);
         }
     }
 

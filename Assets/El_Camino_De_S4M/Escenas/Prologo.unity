@@ -239,7 +239,7 @@ MonoBehaviour:
   _imagen: {fileID: 1545136489}
   _texto: {fileID: 1280148626}
   _fondoTexto: {fileID: 1101014146}
-  _nombreSiguienteEscena: Mundo1
+  _nombreSiguienteEscena: Terreno
   _fondos:
   - {fileID: 21300000, guid: 4a62811d2e5e6f74d894332f04409da5, type: 3}
   - {fileID: 21300000, guid: 7bf88792a983cb146b04e23c76fbc626, type: 3}

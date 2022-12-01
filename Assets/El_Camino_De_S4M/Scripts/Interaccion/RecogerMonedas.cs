@@ -6,11 +6,10 @@ using TMPro;
 public class RecogerMonedas : MonoBehaviour
 {
     private int monedas = 0;
-    TextMeshPro nMonedas;
+    public TextMeshProUGUI nMonedas;
     // Start is called before the first frame update
     void Start()
     {
-        nMonedas = GameObject.Find("NumeroMonedas").GetComponent<TextMeshPro>();
     }
 
     // Update is called once per frame

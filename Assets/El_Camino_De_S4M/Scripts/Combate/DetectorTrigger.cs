@@ -34,6 +34,12 @@ public class DetectorTrigger : MonoBehaviour
 
     private void Update()
     {
+        // Comprobamos si hay objetos destruidos
+        foreach (GameObject g in _objetosEnTrigger.ToList())
+        {
+            if (g == null) { _objetosEnTrigger.Remove(g); }
+        }
+
         // En caso de estar activo el debug, mostramos los objetos que se encuentran en el trigger
         if (_DebugGameObjects)
         {
@@ -42,7 +48,7 @@ public class DetectorTrigger : MonoBehaviour
             {
                 Debug.Log(i + ":U+0020" + _objetosEnTrigger[i].name);
             }
-        }
+        } 
     }
 
     // Metodo para detectar entradas de objetos en el trigger

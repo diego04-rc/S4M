@@ -260,6 +260,38 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
         else
             animator.SetBool("Corriendo", false);
 
+        if (EstadoPadreActual == EstadoPadre.InteractuandoConEntorno)
+        {
+            animator.SetBool("Andando", false);
+            animator.SetBool("Corriendo", false);
+        }
+
+        if (EstadoPadreActual == EstadoPadre.TierraCombate)
+        {
+            if (EstadoHojaActual == EstadoHoja.AtacarCombate)
+            {
+                animator.SetLayerWeight(2, 1.0f);
+                animator.SetBool("Atacando", false);
+                animator.SetLayerWeight(1, 0.0f);
+                animator.SetBool("EnCombate", false);
+            }
+            else
+            {
+                animator.SetLayerWeight(2, 0.0f);
+                animator.SetBool("Atacando", true);
+                animator.SetLayerWeight(1, 0.6f);
+                animator.SetBool("EnCombate", false);
+            }
+            
+        }
+        else
+        {
+            animator.SetLayerWeight(1, 0.0f);
+            animator.SetBool("EnCombate", true);
+            animator.SetLayerWeight(2, 0.0f);
+            animator.SetBool("Atacando", true);
+        }
+
         // Comprobamos si se ha pausado o despausado el juego
         if (Input.GetKeyDown(KeyCode.Escape))
         {

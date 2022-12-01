@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/El_Camino_De_S4M/Escenas/Creditos.unity
     guid: a5a1e304fd5f92745af6ecd9c339600f
   - enabled: 1
+    path: Assets/El_Camino_De_S4M/Escenas/Terreno.unity
+    guid: 7ca878d7973114e42aec46964c2a22f7
+  - enabled: 0
     path: Assets/El_Camino_De_S4M/Escenas/Mundo1.unity
     guid: 39ffa2a06553fda4aa10ac6a581508b5
   - enabled: 0
