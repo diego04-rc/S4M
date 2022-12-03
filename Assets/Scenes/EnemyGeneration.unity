@@ -1348,6 +1348,7 @@ MonoBehaviour:
   tiempoEsperaMin: 5
   tiempoEsperaMax: 10
   alturaGeneracion: 10
+  activo: 0
 --- !u!65 &149960650
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4693,6 +4694,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ddc7803b68f2c94abe58b8b07bf3bce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camaraPrincipal: {fileID: 0}
+  animator: {fileID: 0}
   _controladorJugador: {fileID: 907926524}
   _modeloPersonaje: {fileID: 2140097244}
   _detectorEnemigos: {fileID: 1547228443}
@@ -4717,6 +4720,7 @@ MonoBehaviour:
   _menuInventario: {fileID: 1194529030}
   _fondoMochila: {fileID: 4185729}
   _fondoStats: {fileID: 1776099570}
+  _fondoMapas: {fileID: 0}
   _fondoMapaMundo: {fileID: 49559377}
   _fondoMapaPlanetas: {fileID: 1347435039}
   _acompanyante: {fileID: 1724572026}
@@ -4730,6 +4734,8 @@ MonoBehaviour:
   _costeEstaminaEsquivar: 10
   _regeneracionEstaminaPorSegundo: 5
   _estaminaUI: {fileID: 772768681}
+  _menuPausa: {fileID: 0}
+  _menuOpciones: {fileID: 0}
 --- !u!114 &907926523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9710,6 +9716,7 @@ GameObject:
   - component: {fileID: 2068711499}
   - component: {fileID: 2068711498}
   - component: {fileID: 2068711497}
+  - component: {fileID: 2068711501}
   m_Layer: 0
   m_Name: EnemyZone
   m_TagString: Untagged
@@ -9799,6 +9806,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 28
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2068711501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2068711496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99ca9be41085cfb4f8aa362ac2a1f55a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  generadores:
+  - {fileID: 149960648}
 --- !u!1 &2080331435
 GameObject:
   m_ObjectHideFlags: 0

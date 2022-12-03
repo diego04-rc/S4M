@@ -221,7 +221,7 @@ public class EnemyGenerator : MonoBehaviour
          }
      }*/
 
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
@@ -235,5 +235,10 @@ public class EnemyGenerator : MonoBehaviour
         {
             activo = false;
         }
+    }*/
+
+    public void setActivo(bool activo)
+    {
+        this.activo = activo;
     }
 }
