@@ -133,6 +133,16 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
     [SerializeField] private GameObject _fondoMapaMundo;
     [SerializeField] private GameObject _fondoMapaPlanetas;
 
+    // Cantidades de los items
+    [SerializeField] private int _cantItemVida;
+    [SerializeField] private int _cantItemVidaPlus;
+    [SerializeField] private int _cantItemEnergia;
+    [SerializeField] private int _cantItemEnergiaPlus;
+    [SerializeField] private TextMeshProUGUI _textoItemVida;
+    [SerializeField] private TextMeshProUGUI _textoItemVidaPlus;
+    [SerializeField] private TextMeshProUGUI _textoItemEnergia;
+    [SerializeField] private TextMeshProUGUI _textoItemEnergiaPlus;
+
     // *Fin Variables control del inventario*
 
     [Header("Esfera Acompanyante")]
@@ -227,6 +237,9 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
 
         // Fondo inventario inicial a la mochila
         _fondoMochila.SetActive(true);
+
+        // Actualizamos los items
+        actualizarCantidadesItems();
 
         // Desactivamos el resto de fondos
         _fondoStats.SetActive(false);
@@ -499,6 +512,15 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
         _fondoMochila.SetActive(true);
         _fondoStats.SetActive(false);
         _fondoMapas.SetActive(false);
+        actualizarCantidadesItems();
+    }
+
+    private void actualizarCantidadesItems()
+    {
+        _textoItemVida.text = _cantItemVida.ToString();
+        _textoItemVidaPlus.text = _cantItemVidaPlus.ToString();
+        _textoItemEnergia.text = _cantItemEnergia.ToString();
+        _textoItemEnergiaPlus.text = _cantItemEnergiaPlus.ToString();
     }
 
     public void BotonInventarioStats()
@@ -519,6 +541,26 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
     {
         _fondoMapaMundo.SetActive(!_fondoMapaMundo.activeSelf);
         _fondoMapaPlanetas.SetActive(!_fondoMapaPlanetas.activeSelf);
+    }
+
+    public void anyadirItemVida(int cantidad)
+    {
+        _cantItemVida += cantidad;
+    }
+
+    public void anyadirItemVidaPlus(int cantidad)
+    {
+        _cantItemVidaPlus += cantidad;
+    }
+
+    public void anyadirItemEnergia(int cantidad)
+    {
+        _cantItemEnergia += cantidad;
+    }
+
+    public void anyadirItemEnergiaPlus(int cantidad)
+    {
+        _cantItemEnergiaPlus += cantidad;
     }
 
     // Fin metodos para el inventario
