@@ -5,11 +5,12 @@ using TMPro;
 
 public class RecogerMonedas : MonoBehaviour
 {
-    private int monedas = 0;
+    private int monedas = 100;
     public TextMeshProUGUI nMonedas;
     // Start is called before the first frame update
     void Start()
     {
+        nMonedas.SetText(monedas.ToString());
     }
 
     // Update is called once per frame
