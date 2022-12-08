@@ -173,6 +173,30 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
 
     // *Fin variables control de la estamina*
 
+    // *Variables de vida*
+
+    [Header("Variables para la vida")]
+
+    // Trozos de la vida del personaje
+    [SerializeField] private GameObject[] _barraVida;
+
+    // Caras de S4M
+    [SerializeField] private GameObject[] _carasS4M;
+
+    // Tiempo que dura la cara de danyo
+    [SerializeField] private int _tiempoDanyo;
+
+    // Invulnerabilidad
+    private bool _invulnerable;
+
+    // Variables para controlar la vida actual
+    private int _vida;
+
+    // Vida maxima
+    private int _vidaMaxima;
+
+    // *Fin variables de vida*
+
     // Variable para saber si el juego esta en pausa
     private bool _pausado;
 
@@ -250,6 +274,15 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
 
         // Iniciamos la continua recuperacion de estamina
         StartCoroutine(RecuperacionDeEstamina());
+
+        // Vida maxima vale 4
+        _vidaMaxima = 4;
+
+        // La vida inicial igual a la maxima
+        _vida = _vidaMaxima;
+
+        // No es invulnerable
+        _invulnerable = false;
 
         // El inventario usara la camara principal
         _menuInventario.worldCamera = Camera.main;
@@ -564,6 +597,68 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
     }
 
     // Fin metodos para el inventario
+    //##############################################################
+
+    //##############################################################
+    // Inicio metodos para la gestion de la vida
+
+    public IEnumerator CaraRecibirDanyo()
+    {
+        _carasS4M[0].SetActive(false);
+        _carasS4M[1].SetActive(true);
+        _invulnerable = true;
+        yield return new WaitForSeconds(_tiempoDanyo);
+        _carasS4M[1].SetActive(false);
+        _carasS4M[0].SetActive(true);
+        _invulnerable = false;
+    }
+
+    public void RecibirDanyo()
+    {
+        if (!_invulnerable)
+        {
+            if (_vida == 1)
+            {
+                Muerte();
+            }
+            else
+            {
+                _barraVida[_vida - 1].SetActive(false);
+                _vida--;
+                _barraVida[_vida - 1].SetActive(true);
+                StartCoroutine(CaraRecibirDanyo());
+            }
+        }
+    }
+
+    public void UsarItemVida()
+    {
+        if (_vida < _vidaMaxima && _cantItemVida > 0)
+        {
+            _vida++;
+            _cantItemVida--;
+        }
+    }
+
+    public void UsarItemVidaPlus()
+    {
+        if (_vida < _vidaMaxima && _cantItemVidaPlus > 0)
+        {
+            _vida += 2;
+            _cantItemVidaPlus--;
+            if (_vida > _vidaMaxima)
+            {
+                _vida = _vidaMaxima;
+            }
+        }
+    }
+
+    private void Muerte()
+    {
+
+    }
+
+    // Fin metodos para la gestion de la vida
     //##############################################################
 
     //##############################################################
