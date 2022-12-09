@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,10 +8,18 @@ public class InteraccionTenderoNPC : MonoBehaviour
     GameObject menuTienda;
     GameObject textHelp;
     GameObject dialogNPC;
+    GameObject VcamTienda;
     ControladorDialogo controladorDialogo;
     public int numSentence = 0;
     public bool moveCameraToMenuTienda = false;
     bool enRango = true;
+
+    private void Awake()
+    {
+        //Busca la VCamara de la tienda
+        VcamTienda = GameObject.Find("VCamTienda");
+        VcamTienda.SetActive(false);
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +27,9 @@ public class InteraccionTenderoNPC : MonoBehaviour
         textHelp = GameObject.Find("InteraccionNPC");
         dialogNPC = GameObject.Find("DialogoNPC");
         controladorDialogo = FindObjectOfType<ControladorDialogo>();
+        //Busca la VCamara de la tienda
+        //VcamTienda = GameObject.Find("VCamTienda");
+        //VcamTienda.SetActive(false);
         DesactiveVisibilityMenuTienda();
         DesactiveTextHelp();
         DesactiveDialogoNPC();
@@ -31,6 +43,7 @@ public class InteraccionTenderoNPC : MonoBehaviour
             {
                 DesactiveTextHelp();
                 ActiveDialogoNPC();
+                ActiveCameraStore();
                 controladorDialogo.Sentence(numSentence);
                 numSentence++;
                 moveCameraToMenuTienda = true;
@@ -39,6 +52,7 @@ public class InteraccionTenderoNPC : MonoBehaviour
             {
                 DesactiveVisibilityMenuTienda();
                 ActiveDialogoNPC();
+                DesactiveCameraStore();
                 controladorDialogo.Sentence(numSentence);
             }
             else if (numSentence == 2)
@@ -99,5 +113,15 @@ public class InteraccionTenderoNPC : MonoBehaviour
 
     public void SetNumSentence(int n) {
         numSentence = n;
+    }
+    //Activar VCam
+    public void ActiveCameraStore()
+    {
+        VcamTienda.SetActive(true);
+    }
+    //Desactivar VCam
+    public void DesactiveCameraStore()
+    {
+        VcamTienda.SetActive(false);
     }
 }
