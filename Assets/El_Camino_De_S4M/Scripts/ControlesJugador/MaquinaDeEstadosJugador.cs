@@ -366,8 +366,6 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
         // Actualizamos el movimiento en Y
         _movFinal.y = _movY;
 
-        Debug.Log(_movFinal);
-
         // Movemos el personaje a partir del movimiento final
         _controladorJugador.Move(_movFinal * Time.deltaTime);
     }
