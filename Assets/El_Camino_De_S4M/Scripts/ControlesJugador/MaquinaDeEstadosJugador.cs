@@ -293,23 +293,19 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
 
     void Update()
     {
+        animator.SetFloat("Velocidad", 0.0f);
 
         if (EstadoHojaActual == EstadoHoja.Andando || EstadoHojaActual == EstadoHoja.AndandoCombate
             || EstadoHojaActual == EstadoHoja.AndandoCombateFijando)
-            animator.SetBool("Andando", true);
-        else
-            animator.SetBool("Andando", false);
+            animator.SetFloat("Velocidad", _velActual/_velMaxCorriendo);
 
         if (EstadoHojaActual == EstadoHoja.Corriendo || EstadoHojaActual == EstadoHoja.CorriendoCombate
             || EstadoHojaActual == EstadoHoja.CorriendoCombateFijando)
-            animator.SetBool("Corriendo", true);
-        else
-            animator.SetBool("Corriendo", false);
+            animator.SetFloat("Velocidad", _velActual/_velMaxCorriendo);
 
         if (EstadoPadreActual == EstadoPadre.InteractuandoConEntorno)
         {
-            animator.SetBool("Andando", false);
-            animator.SetBool("Corriendo", false);
+            animator.SetFloat("Velocidad", 0.0f);
         }
 
         if (EstadoPadreActual == EstadoPadre.TierraCombate)
@@ -337,7 +333,7 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
             animator.SetLayerWeight(2, 0.0f);
             animator.SetBool("Atacando", true);
         }
-
+        
         // Comprobamos si se ha pausado o despausado el juego
         if (Input.GetKeyDown(KeyCode.Escape))
         {

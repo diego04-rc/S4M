@@ -14,7 +14,9 @@ public class EEnAireExploracionJugador : EstadoJugador
     {
         // Comprobamos si volvemos a estar en tierra
         if (_contexto.ControladorJugador.isGrounded)
-        { CambiarEstado(_fabrica.EnTierraExploracion()); }
+        { CambiarEstado(_fabrica.EnTierraExploracion());
+            _contexto.animator.SetBool("Saltado", false);
+        }
     }
 
     public override void EntrarEstado()
@@ -25,6 +27,8 @@ public class EEnAireExploracionJugador : EstadoJugador
         // Comprobamos si se ha saltado para aplicar velocidad
         if (_contexto.Saltado)
         { _contexto.MovY = _contexto.VelSalto; }
+
+        _contexto.animator.SetBool("Saltado", true);
     }
 
     public override void IniciarSubestado()

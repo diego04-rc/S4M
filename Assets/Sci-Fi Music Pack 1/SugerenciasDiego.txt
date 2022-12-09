@@ -1,0 +1,19 @@
+Musica para S4M:
+
+Sci-fi music pack 1:
+
+SMP1_Loop_Buying crap_1
+
+SMP1_Loop_Buying crap_2
+
+SMP1_Loop_Illusion
+
+Silly robot chase (esta tal vez podría ser interesante para el combate)
+
+Cargoship (esta podría ponerse para el menú)
+
+THEME_Gliese (muy extraña y da algo de yuyu, podría usarse para el nivel final o para la zona del jefe¿?)
+
+Space caravan
+
+THEME_Voyager (entretenida, podría usarse para algún menú)
