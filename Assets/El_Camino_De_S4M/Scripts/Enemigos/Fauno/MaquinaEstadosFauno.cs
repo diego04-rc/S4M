@@ -26,6 +26,8 @@ public class MaquinaEstadosFauno : MonoBehaviour
     private Transform _enemyPoint;
     private int _indexPoint;
     private Ataque _ataque;
+    [SerializeField]
+    private Animator _animator;
 
     // Start is called before the first frame update
     void Awake()
@@ -55,12 +57,14 @@ public class MaquinaEstadosFauno : MonoBehaviour
         switch (_estadoActual)
         {
             case FaunoEstados.Patrullando:
+                _animator.SetBool("Andando", true);
                 if (_estarAlerta)
                 {
                     _estadoActual = FaunoEstados.Persiguiendo;
                 }
                 break;
             case FaunoEstados.Persiguiendo:
+                _animator.SetBool("Andando", true);
                 if (!_estarAlerta)
                 {
                     _estadoActual = FaunoEstados.Patrullando;
@@ -68,18 +72,24 @@ public class MaquinaEstadosFauno : MonoBehaviour
                 else
                 {
                     _navMeshAgent.SetDestination(_posJugador.position);
-                    if (Vector3.Distance(this.transform.position, _posJugador.position) < 10.0f)
+                    if (Vector3.Distance(this.transform.position, _posJugador.position) < 3.0f)
                     {
                         _navMeshAgent.isStopped = true;
                         _estadoActual = FaunoEstados.Atacando;
+                        transform.LookAt(_posJugador.position);
                         _ataque.Atacar();
+                        _animator.SetBool("Andando", false);
+                        _animator.SetBool("Atacando", true);
                     }
                 }
                 break;
             case FaunoEstados.Atacando:
                 if (_ataque.EstadoActual == Ataque.EstadoAtaque.FinAtaque)
                 {
+                    _animator.SetBool("Andando", true);
+                    _animator.SetBool("Atacando", false);
                     _estadoActual = FaunoEstados.Persiguiendo;
+                    _navMeshAgent.isStopped = false;
                 }
                 break;
         }
@@ -106,7 +116,6 @@ public class MaquinaEstadosFauno : MonoBehaviour
             CalcularPatrulla();
         }
     }
-
 
     public void CalcularPatrulla()
     {
