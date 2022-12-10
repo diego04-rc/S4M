@@ -17,7 +17,7 @@ public class EEnTierraCombateJugador : EstadoJugador
         if (!_contexto.ControladorJugador.isGrounded)
         { CambiarEstado(_fabrica.EnAireCombate()); }
         // Si no comprobamos si dejamos de estar en combate
-        else if (!_contexto.EnemigosCerca())
+        else if (!_contexto.EnemigosCerca() && _contexto.AtaqueLigero.EstadoActual == Ataque.EstadoAtaque.FinAtaque)
         { CambiarEstado(_fabrica.EnTierraExploracion()); }
     }
 
@@ -29,6 +29,9 @@ public class EEnTierraCombateJugador : EstadoJugador
         // Nos aseguramos de que se detecta que el jugador esta en el suelo 
         // añadiendo algo de velocidad en Y
         _contexto.MovY = -10.0f;
+
+        _contexto.animator.SetBool("SacarEspada", true);
+        _contexto.animator.SetLayerWeight(1, 0.8f);
     }
 
     public override void IniciarSubestado()
@@ -41,7 +44,10 @@ public class EEnTierraCombateJugador : EstadoJugador
         { AsignarSubestado(_fabrica.CombateLibre()); }
     }
 
-    public override void SalirEstado() {}
+    public override void SalirEstado() 
+    {
+        _contexto.animator.SetBool("GuardarEspada", true);
+    }
 
     public override void UpdateEstado()
     {

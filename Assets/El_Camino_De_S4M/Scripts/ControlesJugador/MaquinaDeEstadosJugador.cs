@@ -314,22 +314,16 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
             {
                 animator.SetLayerWeight(2, 1.0f);
                 animator.SetBool("Atacando", false);
-                animator.SetLayerWeight(1, 0.0f);
-                animator.SetBool("EnCombate", false);
             }
             else
             {
                 animator.SetLayerWeight(2, 0.0f);
                 animator.SetBool("Atacando", true);
-                animator.SetLayerWeight(1, 0.6f);
-                animator.SetBool("EnCombate", false);
             }
             
         }
         else
         {
-            animator.SetLayerWeight(1, 0.0f);
-            animator.SetBool("EnCombate", true);
             animator.SetLayerWeight(2, 0.0f);
             animator.SetBool("Atacando", true);
         }
@@ -654,6 +648,8 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
 
     // Fin metodos para la gestion de la vida
     //##############################################################
+
+
 
     //##############################################################
     // Inicio metodos del menu de pausa

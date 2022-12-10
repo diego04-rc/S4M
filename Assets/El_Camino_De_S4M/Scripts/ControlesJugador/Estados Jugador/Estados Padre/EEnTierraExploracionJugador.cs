@@ -37,6 +37,8 @@ public class EEnTierraExploracionJugador : EstadoJugador
 
         // Movimiento a cero
         _contexto.MovFinal = Vector3.zero;
+
+        
     }
 
     public override void IniciarSubestado()

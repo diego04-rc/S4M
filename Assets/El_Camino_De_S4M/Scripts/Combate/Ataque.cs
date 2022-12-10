@@ -59,6 +59,7 @@ public abstract class Ataque : MonoBehaviour
                 hitbox.GetComponent<MeshRenderer>().enabled = false;
             }
         }
+        _estadoActual = EstadoAtaque.FinAtaque;
     }
 
     // Llamada para iniciar el ataque desde una clase externa

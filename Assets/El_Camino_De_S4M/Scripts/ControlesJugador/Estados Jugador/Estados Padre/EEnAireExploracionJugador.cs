@@ -10,12 +10,17 @@ public class EEnAireExploracionJugador : EstadoJugador
         FabricaDeEstadosJugador fabrica) : base(contextoActual, fabrica) 
     { _esEstadoRaiz = true; IniciarSubestado(); }
 
+    bool _tiempoEspera = true;
+    float _tiempoPasado = 0.0f;
+
     public override void ComprobarCambioEstado()
     {
         // Comprobamos si volvemos a estar en tierra
-        if (_contexto.ControladorJugador.isGrounded)
-        { CambiarEstado(_fabrica.EnTierraExploracion());
+        if (_contexto.ControladorJugador.isGrounded && !_tiempoEspera)
+        {
             _contexto.animator.SetBool("Saltado", false);
+            _contexto.animator.SetBool("EnElAire", false);
+            CambiarEstado(_fabrica.EnTierraExploracion());
         }
     }
 
@@ -24,11 +29,9 @@ public class EEnAireExploracionJugador : EstadoJugador
         // Establecemos el estado padre
         _contexto.EstadoPadreActual = MaquinaDeEstadosJugador.EstadoPadre.AireExploracion;
 
-        // Comprobamos si se ha saltado para aplicar velocidad
-        if (_contexto.Saltado)
-        { _contexto.MovY = _contexto.VelSalto; }
-
         _contexto.animator.SetBool("Saltado", true);
+
+        _tiempoEspera = true;
     }
 
     public override void IniciarSubestado()
@@ -50,16 +53,36 @@ public class EEnAireExploracionJugador : EstadoJugador
     {
         // DEBUG //
         Debug.Log("Estado Raiz: En Aire Exploracion");
-        // Aplicamos la gravedad al jugador
-        if (_contexto.MovY > 0.0f)
-        { _contexto.MovY -= _contexto.Gravedad * Time.deltaTime; }
-        // Si ademas estamos cayendo, aplicamos un extra de caida
+
+        if (_tiempoEspera)
+        {
+            _tiempoPasado += Time.deltaTime;
+            if (_tiempoPasado > 0.8f)
+            {
+                // Comprobamos si se ha saltado para aplicar velocidad
+                _contexto.MovY = _contexto.VelSalto;
+                _contexto.animator.SetBool("EnElAire", true);
+            }
+        }
         else
-        { _contexto.MovY -= _contexto.Gravedad * _contexto.IncDeCaida * Time.deltaTime; }
+        {
+            // Aplicamos la gravedad al jugador
+            if (_contexto.MovY > 0.0f)
+            { _contexto.MovY -= _contexto.Gravedad * Time.deltaTime; }
+            // Si ademas estamos cayendo, aplicamos un extra de caida
+            else
+            { _contexto.MovY -= _contexto.Gravedad * _contexto.IncDeCaida * Time.deltaTime; }
+        }
+        
 
         // Actualizamos el estado hijo
         _subestadoActual.UpdateEstado();
         // Comprobamos un posible cambio de estado
         ComprobarCambioEstado();
+
+        if (_tiempoPasado > 0.8f)
+        {
+            _tiempoEspera = false;
+        }
     }
 }
