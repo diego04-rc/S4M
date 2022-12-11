@@ -16,16 +16,6 @@ public class CameraViewTienda : MonoBehaviour
         currentView = transform;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (interaccionTenderoNPC.moveCameraToMenuTienda == true) {
-            print("Cambiando camara");
-            currentView = viewMenuTienda;
-            interaccionTenderoNPC.moveCameraToMenuTienda = false;
-        }
-    }
-
     private void LateUpdate()
     {
         print("Cambiando camara p2");

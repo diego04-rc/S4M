@@ -9,30 +9,31 @@ public class InteraccionTenderoNPC : MonoBehaviour
     GameObject textHelp;
     GameObject dialogNPC;
     GameObject VcamTienda;
+    GameObject hud;
     ControladorDialogo controladorDialogo;
+    MaquinaDeEstadosJugador maquinaDeEstadosJugador;
     public int numSentence = 0;
-    public bool moveCameraToMenuTienda = false;
-    bool enRango = true;
+    bool enRango = false;
 
     private void Awake()
     {
         //Busca la VCamara de la tienda
         VcamTienda = GameObject.Find("VCamTienda");
         VcamTienda.SetActive(false);
+
+        menuTienda = GameObject.Find("MenuTienda");
+        textHelp = GameObject.FindGameObjectWithTag("TextoDeAyuda");
+        dialogNPC = GameObject.Find("DialogoNPC");
+        controladorDialogo = FindObjectOfType<ControladorDialogo>();
+        hud = GameObject.Find("HUD");
+        maquinaDeEstadosJugador = FindObjectOfType<MaquinaDeEstadosJugador>();
     }
     // Start is called before the first frame update
     void Start()
     {
-        menuTienda = GameObject.Find("MenuTienda");
-        textHelp = GameObject.Find("InteraccionNPC");
-        dialogNPC = GameObject.Find("DialogoNPC");
-        controladorDialogo = FindObjectOfType<ControladorDialogo>();
         //Busca la VCamara de la tienda
         //VcamTienda = GameObject.Find("VCamTienda");
         //VcamTienda.SetActive(false);
-        DesactiveVisibilityMenuTienda();
-        DesactiveTextHelp();
-        DesactiveDialogoNPC();
     }
 
     // Update is called once per frame
@@ -46,7 +47,7 @@ public class InteraccionTenderoNPC : MonoBehaviour
                 ActiveCameraStore();
                 controladorDialogo.Sentence(numSentence);
                 numSentence++;
-                moveCameraToMenuTienda = true;
+                maquinaDeEstadosJugador.ControladorJugador.enabled = false;
             }
             else if (Input.GetKeyDown(KeyCode.R) && numSentence == 1)
             {
@@ -54,6 +55,7 @@ public class InteraccionTenderoNPC : MonoBehaviour
                 ActiveDialogoNPC();
                 DesactiveCameraStore();
                 controladorDialogo.Sentence(numSentence);
+                maquinaDeEstadosJugador.ControladorJugador.enabled = true;
             }
             else if (numSentence == 2)
             {
@@ -117,11 +119,13 @@ public class InteraccionTenderoNPC : MonoBehaviour
     //Activar VCam
     public void ActiveCameraStore()
     {
+        hud.SetActive(false);
         VcamTienda.SetActive(true);
     }
     //Desactivar VCam
     public void DesactiveCameraStore()
     {
+        hud.SetActive(true);
         VcamTienda.SetActive(false);
     }
 }
