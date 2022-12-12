@@ -29,12 +29,13 @@ public class DetectorTrigger : MonoBehaviour
     {
         // Inicializamos la lista y nos aseguramos de que el colider sea un trigger
         _objetosEnTrigger = new List<GameObject>();
-        gameObject.GetComponent<Collider>().isTrigger = true;  
+        gameObject.GetComponent<Collider>().isTrigger = true;
     }
 
     private void Update()
     {
         // Comprobamos si hay objetos destruidos
+        int enemigos = 0;
         foreach (GameObject g in _objetosEnTrigger.ToList())
         {
             if (g == null) { _objetosEnTrigger.Remove(g); }

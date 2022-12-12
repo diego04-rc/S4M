@@ -4748,6 +4748,7 @@ GameObject:
   m_Component:
   - component: {fileID: 949341337}
   - component: {fileID: 949341336}
+  - component: {fileID: 949341338}
   m_Layer: 0
   m_Name: MusicManager
   m_TagString: Untagged
@@ -4866,6 +4867,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &949341338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949341335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd07b19b890ab534ab27fbe5406c2abf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicaNormal: {fileID: 8300000, guid: 8a534670fc2bb1241b3f74bc62970baf, type: 3}
+  musicaCombate: {fileID: 8300000, guid: 9791b699aa063b348b0e261774909e35, type: 3}
 --- !u!1001 &977651946
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7670,11 +7685,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6295538789954426752, guid: a017e2a31fcc489489c7769616d4c48b, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.0013613403
+      value: -0.0013613732
       objectReference: {fileID: 0}
     - target: {fileID: 6295538789954426752, guid: a017e2a31fcc489489c7769616d4c48b, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.00020775468
+      value: -0.0002077597
       objectReference: {fileID: 0}
     - target: {fileID: 6295538789954426752, guid: a017e2a31fcc489489c7769616d4c48b, type: 3}
       propertyPath: m_LocalRotation.y
@@ -7682,7 +7697,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6295538789954426752, guid: a017e2a31fcc489489c7769616d4c48b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.15086353
+      value: -0.15086356
       objectReference: {fileID: 0}
     - target: {fileID: 6564173769955975083, guid: a017e2a31fcc489489c7769616d4c48b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
