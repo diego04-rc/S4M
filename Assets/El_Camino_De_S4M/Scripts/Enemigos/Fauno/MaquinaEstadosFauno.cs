@@ -28,7 +28,8 @@ public class MaquinaEstadosFauno : MonoBehaviour
     private Ataque _ataque;
     [SerializeField]
     private Animator _animator;
-
+    //Controlador de sonido del fauno
+    private FaunoSoundManager faunoSoundManager;
     // Start is called before the first frame update
     void Awake()
     {
@@ -42,6 +43,8 @@ public class MaquinaEstadosFauno : MonoBehaviour
             _patrolPoints[i] = _enemyZone.transform.GetChild(i).gameObject.transform;
         }
         _ataque = GetComponent<Ataque>();
+
+        faunoSoundManager = GetComponent<FaunoSoundManager>();
     }
 
     private void Start()
@@ -60,6 +63,7 @@ public class MaquinaEstadosFauno : MonoBehaviour
                 _animator.SetBool("Andando", true);
                 if (_estarAlerta)
                 {
+                    faunoSoundManager.rugido();
                     _estadoActual = FaunoEstados.Persiguiendo;
                 }
                 break;
@@ -80,6 +84,8 @@ public class MaquinaEstadosFauno : MonoBehaviour
                         _ataque.Atacar();
                         _animator.SetBool("Andando", false);
                         _animator.SetBool("Atacando", true);
+
+                        faunoSoundManager.atacar();
                     }
                 }
                 break;

@@ -36,4 +36,9 @@ public class CharacterSoundManager : MonoBehaviour
     {
         characterSounds[2].Play();
     }
+
+    public void paso()
+    {
+        characterSounds[3].Play();
+    }
 }

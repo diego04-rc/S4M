@@ -31,12 +31,14 @@ public class MusicManager : MonoBehaviour
     public void activarMusicaCombate()
     {
         audioSource.Stop();
+        audioSource.loop = true;
         audioSource.PlayOneShot(musicaCombate);
     }
 
     public void desactivarMusicaCombate()
     {
         audioSource.Stop();
+        audioSource.loop = true;
         audioSource.PlayOneShot(musicaNormal);
     }
 }
