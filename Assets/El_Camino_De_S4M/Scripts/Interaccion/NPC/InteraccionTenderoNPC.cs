@@ -14,6 +14,7 @@ public class InteraccionTenderoNPC : MonoBehaviour
     MaquinaDeEstadosJugador maquinaDeEstadosJugador;
     public int numSentence = 0;
     bool enRango = false;
+    private AudioSource saludo;
 
     private void Awake()
     {
@@ -27,6 +28,8 @@ public class InteraccionTenderoNPC : MonoBehaviour
         controladorDialogo = FindObjectOfType<ControladorDialogo>();
         hud = GameObject.Find("HUD");
         maquinaDeEstadosJugador = FindObjectOfType<MaquinaDeEstadosJugador>();
+
+        saludo = GetComponent<AudioSource>();
     }
     // Start is called before the first frame update
     void Start()
@@ -48,6 +51,7 @@ public class InteraccionTenderoNPC : MonoBehaviour
                 controladorDialogo.Sentence(numSentence);
                 numSentence++;
                 maquinaDeEstadosJugador.ControladorJugador.enabled = false;
+                saludo.Play();
             }
             else if (Input.GetKeyDown(KeyCode.R) && numSentence == 1)
             {
