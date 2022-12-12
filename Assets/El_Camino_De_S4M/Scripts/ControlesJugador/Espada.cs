@@ -9,9 +9,11 @@ public class Espada : MonoBehaviour
     public Transform _posicionMano;
     public Animator _animator;
     private MusicManager musicManager;
+    private CharacterSoundManager characterSoundManager;
     private void Awake()
     {
         musicManager = GameObject.Find("MusicManager").GetComponent<MusicManager>();
+        characterSoundManager = GetComponent<CharacterSoundManager>();
     }
     public void EspadaGuardada()
     {
@@ -22,6 +24,7 @@ public class Espada : MonoBehaviour
         _animator.SetBool("GuardarEspada", false);
         _animator.SetLayerWeight(1, 0.0f);
         musicManager.desactivarMusicaCombate();
+        characterSoundManager.envainarEspada();
     }
 
     public void EspadaEnMano()
@@ -32,5 +35,6 @@ public class Espada : MonoBehaviour
         _espada.localScale = Vector3.one;
         _animator.SetBool("SacarEspada", false);
         musicManager.activarMusicaCombate();
+        characterSoundManager.desenvainarEspada();
     }
 }

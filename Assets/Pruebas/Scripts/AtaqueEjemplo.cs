@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class AtaqueEjemplo : Ataque
 {
+    private CharacterSoundManager characterSoundManager;
+
+    private void Awake()
+    {
+        characterSoundManager = GetComponentInChildren<CharacterSoundManager>();
+    }
     protected override void EfectoAtaque(List<GameObject> objetosEnTrigger)
     {
         Debug.Log("Efectos aplicados a: ");
@@ -11,6 +17,7 @@ public class AtaqueEjemplo : Ataque
         {
             Destroy(objeto);
         }
+        characterSoundManager.atacar();
     }
 
     protected override void PostAtaque()
