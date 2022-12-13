@@ -33,11 +33,17 @@ public class EsferaAcompanyante : MonoBehaviour
     [SerializeField]
     private float _vel;
 
+    private AudioSource companyeroSound;
+
     public enum EstadoAcompanyante { Siguiendo, Inventario, MostrandoInventario };
     private EstadoAcompanyante _estadoActual;
 
     public EstadoAcompanyante EstadoActual { get { return _estadoActual; } }
 
+    private void Awake()
+    {
+        companyeroSound = GetComponent<AudioSource>();
+    }
     void Start()
     {
         _estadoActual = EstadoAcompanyante.Siguiendo;
@@ -82,6 +88,7 @@ public class EsferaAcompanyante : MonoBehaviour
 
     public void cambiarEstado(EstadoAcompanyante nuevoEstado)
     {
+        companyeroSound.Play();
         _estadoActual = nuevoEstado;
     }
 }
