@@ -21,4 +21,9 @@ public class PasosS4M : MonoBehaviour
     {
         
     }
+
+    public void Paso()
+    {
+        characterSound.paso();
+    }
 }
