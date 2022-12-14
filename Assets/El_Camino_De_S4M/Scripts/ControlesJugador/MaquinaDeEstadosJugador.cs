@@ -29,6 +29,8 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
 
     public Animator animator;
 
+    public GameObject _fondoMuerte;
+
     // Variables con el estado actual
     private EstadoHoja _estadoHojaActual;
     private EstadoPadre _estadoPadreActual;
@@ -187,7 +189,7 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
     [SerializeField] private int _tiempoDanyo;
 
     // Invulnerabilidad
-    private bool _invulnerable;
+    public bool _invulnerable;
 
     // Variables para controlar la vida actual
     private int _vida;
@@ -607,6 +609,7 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
         {
             if (_vida == 1)
             {
+                _barraVida[_vida - 1].SetActive(false);
                 Muerte();
             }
             else
@@ -643,7 +646,15 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
 
     private void Muerte()
     {
+        _inputsActivos = false;
+        _fondoMuerte.SetActive(true);
+        StartCoroutine(EscenaMuerte());
+    }
 
+    IEnumerator EscenaMuerte()
+    {
+        yield return new WaitForSeconds(5);
+        SceneManager.LoadScene("Terreno");
     }
 
     // Fin metodos para la gestion de la vida
