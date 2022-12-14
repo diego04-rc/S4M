@@ -41,4 +41,14 @@ public class CharacterSoundManager : MonoBehaviour
     {
         characterSounds[3].Play();
     }
+
+    public void saltoInicio()
+    {
+        characterSounds[4].Play();
+    }
+
+    public void saltoCaida()
+    {
+        characterSounds[5].Play();
+    }
 }

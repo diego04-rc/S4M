@@ -26,4 +26,14 @@ public class PasosS4M : MonoBehaviour
     {
         characterSound.paso();
     }
+
+    public void SaltoInicio()
+    {
+        characterSound.saltoInicio();
+    }
+
+    public void SaltoCaida()
+    {
+        characterSound.saltoCaida();
+    }
 }
