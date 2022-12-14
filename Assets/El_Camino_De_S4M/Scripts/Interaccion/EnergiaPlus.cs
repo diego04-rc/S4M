@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Moneda : MonoBehaviour
+public class EnergiaPlus : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -18,8 +18,9 @@ public class Moneda : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.name == "Jugador") {
-            other.GetComponent<RecogerMonedas>().monedaRecogida();
+        if (other.name == "Jugador")
+        {
+            other.GetComponent<RecogerEnergia>().energiaPlusRecogida();
             Destroy(gameObject);
         }
     }

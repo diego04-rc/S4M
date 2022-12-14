@@ -13,7 +13,7 @@ public class Vida : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        transform.Rotate(0, 90 * Time.deltaTime, 0);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -21,7 +21,7 @@ public class Vida : MonoBehaviour
         if (other.name == "Jugador")
         {
             //Añadir al inventario
-            //other.GetComponent<RecogerVida>().recogerVida();
+            other.GetComponent<RecogerVida>().vidaRecogida();
             Destroy(gameObject);
         }
     }
