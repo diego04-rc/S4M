@@ -295,6 +295,9 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
 
     void Update()
     {
+        if (_estadoActual == null)
+            return;
+
         animator.SetFloat("Velocidad", 0.0f);
 
         if (EstadoHojaActual == EstadoHoja.Andando || EstadoHojaActual == EstadoHoja.AndandoCombate
@@ -648,11 +651,19 @@ public class MaquinaDeEstadosJugador : MonoBehaviour
     {
         _inputsActivos = false;
         _fondoMuerte.SetActive(true);
+        _estadoActual = null;
+        animator.SetBool("Muerto", true);
+        animator.SetLayerWeight(1, 0.0f);
+        animator.SetLayerWeight(2, 0.0f);
+        transform.tag = "Untagged";
+        transform.parent.tag = "Untagged";
         StartCoroutine(EscenaMuerte());
     }
 
     IEnumerator EscenaMuerte()
     {
+        yield return null;
+        animator.SetBool("Muerto", false);
         yield return new WaitForSeconds(5);
         SceneManager.LoadScene("Terreno");
     }
