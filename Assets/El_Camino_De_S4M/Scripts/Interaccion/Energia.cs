@@ -13,7 +13,7 @@ public class Energia : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        transform.Rotate(0, 90 * Time.deltaTime, 0);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -21,7 +21,7 @@ public class Energia : MonoBehaviour
         if (other.name == "Jugador")
         {
             //Añadir al inventario
-            //other.GetComponent<RecogerEnergia>().recogerEnergia();
+            other.GetComponent<RecogerEnergia>().energiaRecogida();
             Destroy(gameObject);
         }
     }

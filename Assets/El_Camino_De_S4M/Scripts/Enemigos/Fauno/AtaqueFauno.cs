@@ -6,7 +6,13 @@ public class AtaqueFauno : Ataque
 {
     protected override void EfectoAtaque(List<GameObject> objetosEnTrigger)
     {
-        
+        foreach(GameObject objeto in objetosEnTrigger)
+        {
+            if (objeto.tag == "Player")
+            {
+                objeto.GetComponent<MaquinaDeEstadosJugador>().RecibirDanyo();
+            }
+        }
     }
 
     protected override void PostAtaque()

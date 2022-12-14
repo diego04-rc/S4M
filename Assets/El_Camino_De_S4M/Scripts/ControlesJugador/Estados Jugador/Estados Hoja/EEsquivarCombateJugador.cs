@@ -50,6 +50,8 @@ public class EEsquivarCombateJugador : EstadoJugador
 
         // Aplicamos el vector movimiento
         _contexto.MovFinal = _contexto.DirEsquive * _contexto.VelActEsquive;
+
+        _contexto._invulnerable = true;
     }
 
     public override void IniciarSubestado() {}
@@ -58,6 +60,8 @@ public class EEsquivarCombateJugador : EstadoJugador
     {
         // Timer antes de poder realizar un esquive
         _contexto.IniciarCoolDown();
+
+        _contexto._invulnerable = false;
     }
 
     public override void UpdateEstado()
