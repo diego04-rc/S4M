@@ -8,6 +8,10 @@ TagManager:
   - PatrolPoint
   - LabelCantidad
   - TextoDeAyuda
+  - QuantityVidaPlus
+  - QuanrityVida
+  - QuantityEnergia
+  - QuantityEnergiaPlus
   layers:
   - Default
   - TransparentFX
