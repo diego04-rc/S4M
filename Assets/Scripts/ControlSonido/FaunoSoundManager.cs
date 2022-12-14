@@ -30,4 +30,9 @@ public class FaunoSoundManager : MonoBehaviour
     {
         faunoSounds[1].Play();
     }
+
+    public void paso()
+    {
+        faunoSounds[2].Play();
+    }
 }
