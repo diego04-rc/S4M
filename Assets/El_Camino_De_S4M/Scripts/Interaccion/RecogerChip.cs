@@ -7,12 +7,10 @@ public class RecogerChip : MonoBehaviour
 {
     private int fragmentos = 0;
     public TextMeshProUGUI nFragmentos;
-    GameObject panelFragmentos;
     // Start is called before the first frame update
     void Start()
     {
         nFragmentos.SetText(fragmentos.ToString());
-        panelFragmentos = GameObject.Find("PanelFragmentos");
     }
 
     // Update is called once per frame
@@ -23,9 +21,6 @@ public class RecogerChip : MonoBehaviour
 
     public void chipRecogido()
     {
-        if (fragmentos == 0) {
-            panelFragmentos.SetActive(true);
-        }
         fragmentos++;
         nFragmentos.SetText(fragmentos.ToString());
     }
