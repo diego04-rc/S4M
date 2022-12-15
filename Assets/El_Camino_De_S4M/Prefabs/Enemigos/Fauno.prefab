@@ -1205,6 +1205,10 @@ PrefabInstance:
       propertyPath: _tagsAceptados.Array.data[0]
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 6287757020262946501, guid: 65b8b3ae31aa8734cbea0446d9f6492e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6287757020262946503, guid: 65b8b3ae31aa8734cbea0446d9f6492e, type: 3}
       propertyPath: m_RootOrder
       value: 1
