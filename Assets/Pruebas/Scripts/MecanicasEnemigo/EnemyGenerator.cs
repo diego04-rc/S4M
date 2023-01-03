@@ -90,14 +90,14 @@ public class EnemyGenerator : MonoBehaviour
 
             int[] generatorPos = new int[numEnemigos];
 
-            generatorPos[0] = UnityEngine.Random.Range(0, maxEnemigos);
+            generatorPos[0] = UnityEngine.Random.Range(0, maxEnemigos-1);
             for (int i = 1; i < numEnemigos; i++)
             {
                 int pos = 0;
                 bool noRepetido = false;
                 while (!noRepetido)
                 {
-                    pos = UnityEngine.Random.Range(0, maxEnemigos);
+                    pos = UnityEngine.Random.Range(0, maxEnemigos-1);
                     int j = 0;
                     for (j = 0; j < i && pos != generatorPos[j]; j++) ;
                     noRepetido = (j == i);
@@ -107,7 +107,7 @@ public class EnemyGenerator : MonoBehaviour
 
             int numEnemTipo1 =(int) (ratioEnemigo1 * numEnemigos);
 
-            int numEnemTipo2 = (int)(ratioEnemigo2 * numEnemigos);
+            int numEnemTipo2 = (int) (ratioEnemigo2 * numEnemigos);
 
             /*float[] posEnemigosX = new float[numEnemigos];
             float[] posEnemigosZ = new float[numEnemigos];
@@ -120,14 +120,14 @@ public class EnemyGenerator : MonoBehaviour
             }*/
             for (int i = 0; i < numEnemTipo1; i++)
             {
-                enemigo1.GetComponentInChildren<DetectorPatrolPoint>().setEnemyZone(enemyZone);
-                enemigo1.GetComponentInChildren<DetectorPatrolPoint>().setNumPoints(numPoints);
+                enemigo1.GetComponent<MaquinaEstadosFauno>().SetEnemyZone(enemyZone);
+                enemigo1.GetComponent<MaquinaEstadosFauno>().SetNumPoints(numPoints);
                 Instantiate(enemigo1, generatorPoints[generatorPos[i]].position, transform.rotation);
             }
             for (int i = numEnemTipo1; i < (numEnemTipo1 + numEnemTipo2); i++)
             {
-                enemigo2.GetComponentInChildren<DetectorPatrolPoint>().setEnemyZone(enemyZone);
-                enemigo2.GetComponentInChildren<DetectorPatrolPoint>().setNumPoints(numPoints);
+                enemigo2.GetComponent<MaquinaEstadosFauno>().SetEnemyZone(enemyZone);
+                enemigo2.GetComponent<MaquinaEstadosFauno>().SetNumPoints(numPoints);
                 Instantiate(enemigo2, generatorPoints[generatorPos[i]].position, transform.rotation);
             }
         }

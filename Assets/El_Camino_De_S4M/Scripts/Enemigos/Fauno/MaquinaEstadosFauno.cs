@@ -30,6 +30,8 @@ public class MaquinaEstadosFauno : MonoBehaviour
     private Animator _animator;
     //Controlador de sonido del fauno
     private FaunoSoundManager faunoSoundManager;
+    //Punto de patrulla seleccionado
+    public Transform selectedPoint;
     // Start is called before the first frame update
     void Awake()
     {
@@ -49,8 +51,9 @@ public class MaquinaEstadosFauno : MonoBehaviour
 
     private void Start()
     {
-        _indexPoint = UnityEngine.Random.Range(0, _numPoints);
+        _indexPoint = UnityEngine.Random.Range(0, _numPoints-1);
         _enemyPoint = _patrolPoints[_indexPoint];
+        selectedPoint = _enemyPoint;
         _navMeshAgent.SetDestination(_enemyPoint.position);
     }
 
@@ -125,11 +128,12 @@ public class MaquinaEstadosFauno : MonoBehaviour
 
     public void CalcularPatrulla()
     {
-        int randomPosition = UnityEngine.Random.Range(0, _numPoints);
+        int randomPosition = UnityEngine.Random.Range(0, _numPoints-1);
         while (randomPosition == _indexPoint)
-            randomPosition = UnityEngine.Random.Range(0, _numPoints);
+            randomPosition = UnityEngine.Random.Range(0, _numPoints-1);
         _indexPoint = randomPosition;
         _enemyPoint = _patrolPoints[_indexPoint];
+        selectedPoint= _enemyPoint;
         _navMeshAgent.SetDestination(_enemyPoint.position);
     }
 
