@@ -15,7 +15,8 @@ public class AtaqueEjemplo : Ataque
         Debug.Log("Efectos aplicados a: ");
         foreach(GameObject objeto in objetosEnTrigger)
         {
-            Destroy(objeto);
+            //Destroy(objeto);
+            objeto.GetComponent<MaquinaEstadosFauno>().recibirDanyoX1();/*Enemigo recibe 1 de daño*/
         }
         characterSoundManager.atacar();
     }

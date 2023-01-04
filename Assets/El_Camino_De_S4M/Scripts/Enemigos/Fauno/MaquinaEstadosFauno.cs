@@ -28,6 +28,8 @@ public class MaquinaEstadosFauno : MonoBehaviour
     private Ataque _ataque;
     [SerializeField]
     private Animator _animator;
+    //Vida del fauno
+    private int Life;
     //Controlador de sonido del fauno
     private FaunoSoundManager faunoSoundManager;
     //Punto de patrulla seleccionado
@@ -45,7 +47,7 @@ public class MaquinaEstadosFauno : MonoBehaviour
             _patrolPoints[i] = _enemyZone.transform.GetChild(i).gameObject.transform;
         }
         _ataque = GetComponent<Ataque>();
-
+        Life = 5;
         faunoSoundManager = GetComponent<FaunoSoundManager>();
     }
 
@@ -145,5 +147,23 @@ public class MaquinaEstadosFauno : MonoBehaviour
     public void SetNumPoints(int num)
     {
         _numPoints = num;
+    }
+
+    public void recibirDanyoX1()
+    {
+        Life--;
+        if (Life <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
+    public void recibirDanyoX2()
+    {
+        Life-=2;
+        if (Life <= 0)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
