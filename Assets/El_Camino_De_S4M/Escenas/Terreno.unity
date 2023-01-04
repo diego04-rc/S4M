@@ -6434,15 +6434,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2517095770533783307, guid: a017e2a31fcc489489c7769616d4c48b, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.009041788
+      value: 0.009041786
       objectReference: {fileID: 0}
     - target: {fileID: 2517095770533783307, guid: a017e2a31fcc489489c7769616d4c48b, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.14548999
+      value: -0.14548995
       objectReference: {fileID: 0}
     - target: {fileID: 2517095770533783307, guid: a017e2a31fcc489489c7769616d4c48b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0013296938
+      value: 0.0013296932
       objectReference: {fileID: 0}
     - target: {fileID: 2531134009263160214, guid: a017e2a31fcc489489c7769616d4c48b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -72234,6 +72234,42 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2057595588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2057595585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05aead5bb8430844d93f99e2b56241f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numSentence: 0
+  frases:
+  - "Hola, \xBFQu\xE9 tal?"
+  - "T\xFA no eres de por aqu\xED, \xBFverdad? Hacia tiempo que no teniamos visita."
+  - "Si necesitas algo, deber\xEDas ir a la tienda de la plaza, all\xED tienen de
+    todo, aunque tendr\xE1s que rascarte el bolsillo."
+  - "\xBFChips?\xBFQu\xE9 es eso?\xBFSe come?"
+  - "Si vas a salir fuera, ten cuidado. Desde la lluvia de meteoritos de anoche,
+    los monstruos de las monta\xF1as del oeste est\xE1n muy activos."
+  dialogText: {fileID: 861798576}
+  velocidadDialogo: 0.008
+--- !u!135 &2057595589
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2057595585}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 4
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2060368108
 GameObject:
   m_ObjectHideFlags: 0
@@ -73091,6 +73127,41 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: fa830668fc4ed18488cc7f5251c397ed, type: 3}
   m_PrefabInstance: {fileID: 2127194094}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2127194096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2073054774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05aead5bb8430844d93f99e2b56241f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numSentence: 0
+  frases:
+  - "\xDAltimamente no dejan de suceder cosas extra\xF1as."
+  - "Anoche, mi hermano estaba pescando en el r\xEDo cuando uno de esos meteoritos
+    pas\xF3 rozandole la cabeza."
+  - "Ojal\xE1 mi hermano hubiera atrapado el meteorito, seguro que el tendero nos
+    hubiera dado algo por \xE9l, pero se hundi\xF3 en el agua."
+  - "Por cierto, \xBFt\xFA qui\xE9n eres?"
+  dialogText: {fileID: 861798576}
+  velocidadDialogo: 0.008
+--- !u!135 &2127194097
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2073054774}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 4
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2130742539
 GameObject:
   m_ObjectHideFlags: 0
