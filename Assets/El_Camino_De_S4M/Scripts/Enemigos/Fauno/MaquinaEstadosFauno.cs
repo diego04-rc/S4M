@@ -34,6 +34,9 @@ public class MaquinaEstadosFauno : MonoBehaviour
     private FaunoSoundManager faunoSoundManager;
     //Punto de patrulla seleccionado
     public Transform selectedPoint;
+    //Lista de items que podría generar al morir
+    public GameObject[] itemsSoltados;
+    public GameObject moneda;
     // Start is called before the first frame update
     void Awake()
     {
@@ -176,12 +179,20 @@ public class MaquinaEstadosFauno : MonoBehaviour
 
     private void inicioMuerte()
     {
+        faunoSoundManager.atacar();
         _animator.SetBool("Muerto", true);
         DestruirFauno();
     }
 
     public void DestruirFauno()
     {
+        int itemGenerado = Random.Range(0, itemsSoltados.Length);
+        int monedasGeneradas = Random.Range(0, 5);
+        Instantiate(itemsSoltados[itemGenerado], this.transform.position, this.transform.rotation);
+        for(int i = 0; i < monedasGeneradas; i++)
+        {
+            Instantiate(moneda, this.transform.position, this.transform.rotation);
+        }
         if (Life <=0) Destroy(this.gameObject);
     }
 }
