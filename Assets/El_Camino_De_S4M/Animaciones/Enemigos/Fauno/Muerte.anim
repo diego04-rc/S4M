@@ -200,7 +200,7 @@ AnimationClip:
   - time: 0.33333334
     functionName: DestruirFauno
     data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 11500000, guid: d1387f40a4ce1894ba9573f8f3c126e7, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
