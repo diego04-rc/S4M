@@ -47,7 +47,7 @@ public class MaquinaEstadosFauno : MonoBehaviour
             _patrolPoints[i] = _enemyZone.transform.GetChild(i).gameObject.transform;
         }
         _ataque = GetComponent<Ataque>();
-        Life = 5;
+        Life = 3;
         faunoSoundManager = GetComponent<FaunoSoundManager>();
     }
 
@@ -154,7 +154,8 @@ public class MaquinaEstadosFauno : MonoBehaviour
         Life--;
         if (Life <= 0)
         {
-            Destroy(this.gameObject);
+            inicioMuerte();
+                //Destroy(this.gameObject);
         }
     }
 
@@ -163,7 +164,19 @@ public class MaquinaEstadosFauno : MonoBehaviour
         Life-=2;
         if (Life <= 0)
         {
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
+            inicioMuerte();
         }
+    }
+
+    private void inicioMuerte()
+    {
+        _animator.SetBool("Muerto", true);
+        DestruirFauno();
+    }
+
+    public void DestruirFauno()
+    {
+        if (Life <=0) Destroy(this.gameObject);
     }
 }
