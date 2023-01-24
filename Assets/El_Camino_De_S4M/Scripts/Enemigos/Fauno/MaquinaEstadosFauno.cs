@@ -62,6 +62,7 @@ public class MaquinaEstadosFauno : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        _animator.SetBool("Daño", false);
         switch (_estadoActual)
         {
             case FaunoEstados.Patrullando:
@@ -156,6 +157,10 @@ public class MaquinaEstadosFauno : MonoBehaviour
         {
             inicioMuerte();
                 //Destroy(this.gameObject);
+        }
+        else
+        {
+            _animator.SetBool("Daño", true);
         }
     }
 
