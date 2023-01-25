@@ -7,6 +7,12 @@ public class RecogerMonedas : MonoBehaviour
 {
     private int monedas = 100;
     public TextMeshProUGUI nMonedas;
+    private AudioSource audioSource;
+
+    private void Awake()
+    {
+        audioSource = this.GetComponent<AudioSource>();
+    }
 
 
     // Start is called before the first frame update
@@ -25,6 +31,6 @@ public class RecogerMonedas : MonoBehaviour
     public void monedaRecogida() {
         monedas++;
         nMonedas.SetText(monedas.ToString());
-        
+        audioSource.Play();
     }
 }
