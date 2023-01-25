@@ -7,6 +7,12 @@ public class RecogerChip : MonoBehaviour
 {
     private int fragmentos = 0;
     public TextMeshProUGUI nFragmentos;
+    private AudioSource audioSource;
+
+    private void Awake()
+    {
+        audioSource = this.GetComponent<AudioSource>();
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -23,5 +29,6 @@ public class RecogerChip : MonoBehaviour
     {
         fragmentos++;
         nFragmentos.SetText(fragmentos.ToString());
+        audioSource.Play();
     }
 }

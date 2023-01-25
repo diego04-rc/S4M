@@ -6,8 +6,10 @@ public class RecogerEnergia : MonoBehaviour
 {
 
     MaquinaDeEstadosJugador maquinaDeEstadosJugador;
+    private AudioSource audioSource;
     private void Awake()
     {
+        audioSource = this.GetComponent<AudioSource>();
         maquinaDeEstadosJugador = FindObjectOfType<MaquinaDeEstadosJugador>();
     }
     // Start is called before the first frame update
@@ -25,10 +27,12 @@ public class RecogerEnergia : MonoBehaviour
     public void energiaRecogida()
     {
         maquinaDeEstadosJugador.anyadirItemEnergia(1);
+        audioSource.Play();
     }
 
     public void energiaPlusRecogida()
     {
         maquinaDeEstadosJugador.anyadirItemEnergiaPlus(1);
+        audioSource.Play();
     }
 }
