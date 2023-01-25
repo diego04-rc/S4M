@@ -11937,11 +11937,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5782996133652028966, guid: a017e2a31fcc489489c7769616d4c48b, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.097580165
+      value: 0.0975802
       objectReference: {fileID: 0}
     - target: {fileID: 5782996133652028966, guid: a017e2a31fcc489489c7769616d4c48b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0075959424
+      value: -0.007595945
       objectReference: {fileID: 0}
     - target: {fileID: 5800487553434193985, guid: a017e2a31fcc489489c7769616d4c48b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -63156,7 +63156,7 @@ MonoBehaviour:
   - "Interacci\xF3n: E"
   - 'Dejar de interactuar: R'
   dialogText: {fileID: 861798576}
-  velocidadDialogo: 0.008
+  velocidadDialogo: 0.058
 --- !u!135 &1414655767
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -77138,7 +77138,7 @@ MonoBehaviour:
   - "Recuerda que puedes revisar tus items en el inventario (Bot\xF3n Q)."
   - "Si tienes problemas, no dudes en regresar, aqu\xED estar\xE1s a salvo."
   dialogText: {fileID: 861798576}
-  velocidadDialogo: 0.008
+  velocidadDialogo: 0.058
 --- !u!135 &1817114392
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -85418,9 +85418,10 @@ MonoBehaviour:
   numSentence: 0
   frases:
   - Bienvenidos a ciudad Veridian, el hogar del verdor y del frescor
-  - No olvide hablar con nuestros habitantes antes de marcharse
+  - "(Una poblaci\xF3n, perfecto. As\xED podr\xE9 recabar informaci\xF3n sobre la
+    regi\xF3n y los fragmentos.)"
   dialogText: {fileID: 861798576}
-  velocidadDialogo: 0.008
+  velocidadDialogo: 0.058
 --- !u!135 &2028209562
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -86043,7 +86044,7 @@ MonoBehaviour:
   - "Si vas a salir fuera, ten cuidado. Desde la lluvia de meteoritos de anoche,
     los monstruos de las monta\xF1as del oeste est\xE1n muy activos."
   dialogText: {fileID: 861798576}
-  velocidadDialogo: 0.008
+  velocidadDialogo: 0.058
 --- !u!135 &2057595589
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -87011,7 +87012,7 @@ MonoBehaviour:
     hubiera dado algo por \xE9l, pero se hundi\xF3 en el agua."
   - "Por cierto, \xBFt\xFA qui\xE9n eres?"
   dialogText: {fileID: 861798576}
-  velocidadDialogo: 0.008
+  velocidadDialogo: 0.058
 --- !u!135 &2127194097
 SphereCollider:
   m_ObjectHideFlags: 0
