@@ -12,6 +12,7 @@ TagManager:
   - QuanrityVida
   - QuantityEnergia
   - QuantityEnergiaPlus
+  - coin
   layers:
   - Default
   - TransparentFX

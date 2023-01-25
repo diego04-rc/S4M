@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Moneda : MonoBehaviour
 {
+
     // Start is called before the first frame update
     void Start()
     {
-        
+     
     }
 
     // Update is called once per frame
@@ -20,6 +21,7 @@ public class Moneda : MonoBehaviour
     {
         if (other.name == "Jugador") {
             other.GetComponent<RecogerMonedas>().monedaRecogida();
+           
             Destroy(gameObject);
         }
     }
