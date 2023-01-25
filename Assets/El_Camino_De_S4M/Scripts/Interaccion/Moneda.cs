@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class Moneda : MonoBehaviour
 {
-
+    private AudioSource audioSource;
     // Start is called before the first frame update
+    void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
     void Start()
     {
-     
-    }
 
+    }
     // Update is called once per frame
     void Update()
     {
@@ -21,7 +24,7 @@ public class Moneda : MonoBehaviour
     {
         if (other.name == "Jugador") {
             other.GetComponent<RecogerMonedas>().monedaRecogida();
-           
+            audioSource.Play();
             Destroy(gameObject);
         }
     }
