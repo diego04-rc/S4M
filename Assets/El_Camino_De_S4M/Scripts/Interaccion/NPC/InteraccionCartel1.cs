@@ -16,7 +16,7 @@ public class InteraccionCartel1 : MonoBehaviour
     public TextMeshProUGUI dialogText;
     public float velocidadDialogo;
     float speed = 1f;
-
+    private bool imprimiendo;
     private void Awake()
     {
         textHelp = GameObject.FindGameObjectWithTag("TextoDeAyuda");
@@ -29,7 +29,7 @@ public class InteraccionCartel1 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
+       imprimiendo= false;  
     }
 
     // Update is called once per frame
@@ -42,7 +42,7 @@ public class InteraccionCartel1 : MonoBehaviour
                 DesactiveTextHelp();
                 ActiveDialogoNPC();
                 Sentence();
-                ActualizarSentence();
+                //ActualizarSentence();
                 maquinaDeEstadosJugador.ControladorJugador.enabled = false;
             }
             else if (Input.GetKeyDown(KeyCode.R))
@@ -59,6 +59,15 @@ public class InteraccionCartel1 : MonoBehaviour
         if (numSentence >= frases.Length)
         {
             numSentence = 0;
+        }
+    }
+
+    private void DesactualizarSentence()
+    {
+        numSentence--;
+        if (numSentence < 0)
+        {
+            numSentence = frases.Length - 1;
         }
     }
 
@@ -102,10 +111,20 @@ public class InteraccionCartel1 : MonoBehaviour
 
     public void Sentence()
     {
-        if (numSentence <= frases.Length - 1)
+        if (numSentence <= frases.Length - 1 && !imprimiendo)
         {
+            imprimiendo = true;
             dialogText.text = "";
             StartCoroutine(WriteSentence());
+            ActualizarSentence();
+        }
+        else if (numSentence <= frases.Length - 1 && imprimiendo)
+        {
+            imprimiendo = false;
+            DesactualizarSentence();
+            StopCoroutine("WriteSentence");
+            dialogText.text = frases[numSentence];
+            ActualizarSentence();
         }
     }
 
@@ -113,8 +132,12 @@ public class InteraccionCartel1 : MonoBehaviour
     {
         foreach (char Character in frases[numSentence].ToCharArray())
         {
-            dialogText.text += Character;
-            yield return new WaitForSeconds(velocidadDialogo);
+            if (imprimiendo)
+            {
+                dialogText.text += Character;
+                yield return new WaitForSeconds(velocidadDialogo);
+            }
         }
+        imprimiendo = false;
     }
 }

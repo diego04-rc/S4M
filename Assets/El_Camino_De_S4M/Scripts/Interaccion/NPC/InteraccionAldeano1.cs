@@ -22,6 +22,7 @@ public class InteraccionAldeano1 : MonoBehaviour
     public TextMeshProUGUI dialogText;
     public float velocidadDialogo;
     float speed = 1f;
+    private bool imprimiendo;
 
     private void Awake()
     {
@@ -40,6 +41,7 @@ public class InteraccionAldeano1 : MonoBehaviour
         //Busca la VCamara de la tienda
         //VcamTienda = GameObject.Find("VCamTienda");
         //VcamTienda.SetActive(false);
+        imprimiendo= false; 
     }
 
     // Update is called once per frame
@@ -55,7 +57,7 @@ public class InteraccionAldeano1 : MonoBehaviour
                 //controladorDialogo.Sentence(numSentence);
                 Sentence();
                 //numSentence++;
-                ActualizarSentence();
+                //ActualizarSentence();
                 maquinaDeEstadosJugador.ControladorJugador.enabled = false;
                 //saludo.Play();
             }
@@ -77,6 +79,15 @@ public class InteraccionAldeano1 : MonoBehaviour
         if (numSentence >= frases.Length)
         {
             numSentence = 0;
+        }
+    }
+
+    private void DesactualizarSentence()
+    {
+        numSentence--;
+        if (numSentence < 0)
+        {
+            numSentence = frases.Length - 1;
         }
     }
 
@@ -136,10 +147,20 @@ public class InteraccionAldeano1 : MonoBehaviour
 
     public void Sentence()
     {
-        if (numSentence <= frases.Length - 1)
+        if (numSentence <= frases.Length - 1 && !imprimiendo)
         {
+            imprimiendo = true;
             dialogText.text = "";
             StartCoroutine(WriteSentence());
+            ActualizarSentence();
+        }
+        else if(numSentence <= frases.Length - 1 && imprimiendo)
+        {
+            imprimiendo = false;
+            DesactualizarSentence();
+            StopCoroutine("WriteSentence");
+            dialogText.text = frases[numSentence];
+            ActualizarSentence();
         }
     }
 
@@ -147,9 +168,13 @@ public class InteraccionAldeano1 : MonoBehaviour
     {
         foreach (char Character in frases[numSentence].ToCharArray())
         {
-            dialogText.text += Character;
-            yield return new WaitForSeconds(velocidadDialogo);
+            if (imprimiendo)
+            {
+                dialogText.text += Character;
+                yield return new WaitForSeconds(velocidadDialogo);
+            }
         }
+        imprimiendo = false;
     }
  /*   //Activar VCam
     public void ActiveCameraStore()
