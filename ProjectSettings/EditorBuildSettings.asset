@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/El_Camino_De_S4M/Escenas/ElegirNivel.unity
     guid: 63a99d02ff0b14e44bce546e25116260
+  - enabled: 1
+    path: Assets/El_Camino_De_S4M/Escenas/Terreno NV 2.unity
+    guid: a40a513e9e961ec459a05cae0349438a
   m_configObjects: {}
