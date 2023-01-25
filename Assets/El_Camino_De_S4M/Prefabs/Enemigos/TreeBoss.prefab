@@ -164,8 +164,12 @@ MonoBehaviour:
   _numPoints: 0
   _animator: {fileID: 3531202738818411147}
   selectedPoint: {fileID: 0}
-  itemsSoltados: []
-  moneda: {fileID: 0}
+  itemsSoltados:
+  - {fileID: 5198735395889177290, guid: 20cc7ebe4338af5498df685e3079ba74, type: 3}
+  - {fileID: 8622076626042599146, guid: bd39d4f8ee057a443bf63cc95dd4e8f3, type: 3}
+  - {fileID: 5497108365533393861, guid: c8e778e5c59631d44a17478ac124702a, type: 3}
+  - {fileID: 3833496304532086923, guid: 4a4f03d8c49bc8841a18605d7fc9e030, type: 3}
+  moneda: {fileID: 1848531102492920313, guid: baf3d6090b6eb2c428dd7f17645c412e, type: 3}
   stuned: 0
 --- !u!114 &3250793460172762965
 MonoBehaviour:
