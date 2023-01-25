@@ -7,7 +7,8 @@ enum FaunoEstados
 {
     Patrullando,
     Atacando,
-    Persiguiendo
+    Persiguiendo,
+    Stuned
 }
 
 public class MaquinaEstadosFauno : MonoBehaviour
@@ -37,6 +38,7 @@ public class MaquinaEstadosFauno : MonoBehaviour
     //Lista de items que podría generar al morir
     public GameObject[] itemsSoltados;
     public GameObject moneda;
+    public bool stuned;
     // Start is called before the first frame update
     void Awake()
     {
@@ -78,6 +80,12 @@ public class MaquinaEstadosFauno : MonoBehaviour
                 break;
             case FaunoEstados.Persiguiendo:
                 _animator.SetBool("Andando", true);
+                
+                if (stuned)
+                {
+                    _estadoActual = FaunoEstados.Stuned;
+                }
+
                 if (!_estarAlerta)
                 {
                     _estadoActual = FaunoEstados.Patrullando;
@@ -105,6 +113,12 @@ public class MaquinaEstadosFauno : MonoBehaviour
                     _animator.SetBool("Atacando", false);
                     _estadoActual = FaunoEstados.Persiguiendo;
                     _navMeshAgent.isStopped = false;
+                }
+                break;
+            case FaunoEstados.Stuned:
+                if (!stuned)
+                {
+                    _estadoActual = FaunoEstados.Persiguiendo;
                 }
                 break;
         }
@@ -156,6 +170,8 @@ public class MaquinaEstadosFauno : MonoBehaviour
     public void recibirDanyoX1()
     {
         Life--;
+        StopCoroutine(tiempoStuned());
+        StartCoroutine(tiempoStuned());
         if (Life <= 0)
         {
             inicioMuerte();
@@ -170,11 +186,20 @@ public class MaquinaEstadosFauno : MonoBehaviour
     public void recibirDanyoX2()
     {
         Life-=2;
+        StopCoroutine(tiempoStuned());
+        StartCoroutine(tiempoStuned());
         if (Life <= 0)
         {
             //Destroy(this.gameObject);
             inicioMuerte();
         }
+    }
+
+    IEnumerator tiempoStuned()
+    {
+        stuned = true;
+        yield return new WaitForSeconds(3);
+        stuned = false;
     }
 
     private void inicioMuerte()
